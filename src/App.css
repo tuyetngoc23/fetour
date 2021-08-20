@@ -31,7 +31,7 @@ ul{
 #pills-child-tab > a:hover{
   color: brown;
 }
-/*  */
+/* slick */
 .slick{
   position: relative;
 }
@@ -126,4 +126,5 @@ ul{
 	-webkit-animation-name: slideInRight;
 	animation-name: slideInRight;
 }
+
 

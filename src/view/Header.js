@@ -6,7 +6,7 @@ import React from 'react'
 function Header() {
     return (
         <>
-            <ul className="nav nav-pills mb-3 fixed-top" id="pills-tab" role="tablist">
+            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li className="nav-item" role="presentation">
                     <button className="nav-link" id="pills-child-tab" ><a href="">Home</a></button>
                 </li>
