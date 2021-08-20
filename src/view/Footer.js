@@ -3,9 +3,9 @@ import React from 'react'
 function Footer() {
     return (
         <>
-            <footer className="section footer-corporate context-dark">
+            <footer className=" footer-corporate context-dark">
                 <div className="footer-corporate-inset">
-                    <div className="container">
+                    <div className="fix-container">
                         <div className="row row-40 justify-content-lg-between">
                             <div className="col-sm-6 col-md-12 col-lg-3 col-xl-4">
                                 <div className="oh-desktop">
@@ -66,36 +66,13 @@ function Footer() {
                                             <li><a href="#">Gallery</a></li>
                                             <li><a href="#">Blog</a></li>
                                         </ul>
-                                        <div className="group-md group-middle justify-content-sm-start"><a className="button button-lg button-primary button-ujarak" href="#">Get in touch</a></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="footer-corporate-bottom-panel">
-                    <div className="container">
-                        <div className="row justfy-content-xl-space-berween row-10 align-items-md-center2">
-                            <div className="col-sm-6 col-md-4 text-sm-right text-md-center">
-                                <div>
-                                    <ul className="list-inline list-inline-sm footer-social-list-2">
-                                        <li><a className="icon fa fa-facebook" href="#" /></li>
-                                        <li><a className="icon fa fa-twitter" href="#" /></li>
-                                        <li><a className="icon fa fa-google-plus" href="#" /></li>
-                                        <li><a className="icon fa fa-instagram" href="#" /></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="col-sm-6 col-md-4 order-sm-first">
-                                {/* Rights*/}
-                                <p className="rights"><span>©&nbsp;</span><span className="copyright-year" /><span>&nbsp;</span><span>Wonder Tour</span>. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a></p>
-                            </div>
-                            <div className="col-sm-6 col-md-4 text-md-right">
-                                <p className="rights"><a href="#">Privacy Policy</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </footer>
         </>
 
