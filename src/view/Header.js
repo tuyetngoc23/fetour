@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-// import image1 from 'asset/images/phuquoc.jsp'
 
 function Header() {
     return (
