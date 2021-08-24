@@ -20,6 +20,7 @@ ul{
   left: 0;
   right: 0;
   justify-content: flex-end;
+  background-color: black;
 }
 #pills-child-tab > a{
   color: white;
@@ -27,6 +28,9 @@ ul{
   font-size: 20px;
   font-weight: 500;
   text-decoration: none;
+}
+.logo{
+  flex: auto;
 }
 #pills-child-tab > a:hover{
   color: brown;
@@ -40,7 +44,7 @@ ul{
    display: none !important; 
 }
 .slick-list{
-  height: 656px;
+  height: 655px;
 }
 /* Footer */
 .fix-container{
