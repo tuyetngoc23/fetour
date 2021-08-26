@@ -46,6 +46,29 @@ ul{
 .slick-list{
   height: 655px;
 }
+
+.title-slick{
+  position: absolute;
+  color: whitesmoke;
+  font-size: 50px;
+  top: 300px;
+  margin-left: 100px;
+  padding-left: 50px;
+
+}
+@keyframes tingting {
+  0%   {color:red; }
+  25%  {color:yellow; }
+  50%  {color:blue; }
+  75%  {color:green; }
+  100% {color:red; }
+}
+.title-slick > *{
+  animation-name: tingting;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
 /* Footer */
 .fix-container{
   width: 100%;
@@ -114,7 +137,7 @@ ul{
 .list-marked-md > li > a{
   color: #fff;
 }
-@keyframes slideInRight {
+/* @keyframes slideInRight {
 	0% {
 		-webkit-transform: translate3d(100%, 0, 0);
 		transform: translate3d(100%, 0, 0);
@@ -129,6 +152,6 @@ ul{
 .slideInRight {
 	-webkit-animation-name: slideInRight;
 	animation-name: slideInRight;
-}
+} */
 
 
