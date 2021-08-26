@@ -1,13 +1,15 @@
 import './App.css';
 import Footer from './view/Footer';
 import Header from './view/Header';
-import Home from './view/Home';
+// import Home from './view/Home';
+import Tour from './view/Tour'
 
 function App() {
   return (
     <div>
       <Header/>
-      <Home/>
+      {/* <Home/> */}
+      <Tour/>
       <Footer/>
     </div>
   );

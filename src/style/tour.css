@@ -1,0 +1,193 @@
+div {
+    display: block;
+}
+#tour{
+    padding-top: 10px;
+}
+label{
+    padding: 5px;
+}
+/* title*/
+.title-tour{
+    text-align: center;
+    font-size: 50px;
+    padding: 50px;
+    font-weight: 500;
+}
+/* search */
+.searchbar{
+    background: #f1f1f1;
+    color: #212121;
+    margin-bottom: 30px;
+    font: 18px Arial;
+}
+.titlesearch{
+    text-transform: uppercase;
+    font-weight: 700;
+    border-bottom: 1px dashed #ccc;
+    padding: 15px;
+    font-size: 25px;
+    color: #0adec0;
+    line-height: 25px;
+    text-shadow: 1px 1px 2px #ffba8a;
+}
+.frsearch{
+    padding: 15px;
+}
+.mg-bot15{
+    margin-bottom: 15px;
+}
+#search{
+    background-color: #0adec0;
+    color: #f1f1f1;
+}
+.slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #0adec0;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #0adec0;
+    cursor: pointer;
+}
+/* list tour */
+#list{
+    font-family: Muli,sans-serif;
+    font-size: 16px;
+}
+.wrap {
+    position: relative;
+    padding-left: 70px;
+}
+#day {
+    padding: 5px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    float: left;
+    width: 65px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #0adec0;
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+}
+#ngay{
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: 700;
+    border-bottom: solid 1px #fff;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+}
+#box {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: solid 1px rgba(0,0,0,.15);
+    min-height: 251px;
+    min-block-size: 260px;
+}
+#imag {
+    width: 330px;
+    float: left;
+    margin-right: 20px;
+    position: relative;
+    overflow: hidden
+}
+.size {
+    width: 330px;
+    height: 227px;
+    transition: 0.5s;
+}
+
+#caption {
+    overflow: hidden;
+    padding-left: 10px;
+    /* float:right; */
+}
+#tourname{
+    font-size: 23px;
+    line-height: 26px;
+    display: block;
+    font-weight: 700px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    height: 52px;
+}
+a#tourname{
+    color: #000;
+    text-transform: uppercase;
+}
+a#tourname:hover{
+    text-decoration: none;
+    color: #0adec0;
+}
+#datetime{
+    font-family: Arial;
+    padding: 5px 0px;
+    margin: 10px 0px 0px;
+    height: 45px;
+}
+#datetime span{
+    border: 1px solid #555;
+    color: #fff;
+    float: left;
+    display: block;
+    padding: 5px 10px;
+    background-color: #555;
+}
+#datetime span:first-child{
+    border: 1px solid #ddd;
+    background-color: #e7e7e7;
+    color: #555;
+}
+#boxprice div span{
+    display: block;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 5px;
+    padding: 5px 0px;
+}
+#price {
+    font-family: Arial;
+    color: #0adec0;
+    font-size: 25px;
+    line-height: 24px;
+    font-weight: 700;
+    height: 24px;
+    float:right;
+    margin-bottom: 5px;
+}
+#book:hover{
+    background-color: #0adec0;
+}
