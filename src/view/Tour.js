@@ -110,9 +110,9 @@ function Tour() {
                                                             10 chỗ</span>
                                                     </div>
                                                     <p>
-                                                        <span id="price">4.000.000VND</span>
+                                                        <span id="price"><NumberFormat value={4000000} suffix="VND" thousandSeparator={true} thousandsGroupStyle="thousand" displayType="text"/></span>
                                                     </p>
-                                                    <input id="book" type="submit" defaultValue="Đặt Tour" className="form-control" />
+                                                    <input id="book" type="submit" value="Đặt Tour" className="form-control" />
                                                 </div>
                                             </div>
                                         </div>
@@ -146,9 +146,9 @@ function Tour() {
                                                             10 chỗ</span>
                                                     </div>
                                                     <p>
-                                                        <span id="price">4.000.000VND</span>
+                                                        <span id="price"><NumberFormat value={4000000} suffix="VND" thousandSeparator={true} thousandsGroupStyle="thousand" displayType="text"/></span>
                                                     </p>
-                                                    <input id="book" type="submit" defaultValue="Đặt Tour" className="form-control" />
+                                                    <input id="book" type="submit" value="Đặt Tour" className="form-control" />
                                                 </div>
                                             </div>
                                         </div>
