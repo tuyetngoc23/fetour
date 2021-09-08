@@ -9,20 +9,61 @@ import img9 from '../asset/images/img9.jpg'
 import img10 from '../asset/images/img10.jpg'
 import img11 from '../asset/images/img11.jpg'
 import img12 from '../asset/images/img12.jpg'
+import Slider from 'react-slick'
+import {useState, useRef} from 'react'
 
 
 function TourDetail() {
     const onshow = (e) => {
         const collapse = document.querySelectorAll('.collapse');
         collapse.forEach(element => {
-            if(element.classList.contains("show")){
-                return element.classList.remove("show");                
-            }else{
-               return element.classList.add("show");
+            if (element.classList.contains("show")) {
+                return element.classList.remove("show");
+            } else {
+                return element.classList.add("show");
             }
-            
         });
     }
+    const settings = {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        fade: true,
+        autoplay: true,
+    };
+    const settings2 = {
+        slidesToShow: 6,
+        infinite: true,
+        // asNavFor: '#sliderSyncingNav',
+        isThumbs: true,
+        focusOnSelect: true,
+        swipeToSlide: true,
+        reponsive: [{
+          "breakpoint": 992,
+          "settings": {
+            "slidesToShow": 4
+          }
+        }, {
+          "breakpoint": 768,
+          "settings": {
+            "slidesToShow": 3
+          }
+        }, {
+          "breakpoint": 554,
+          "settings": {
+            "slidesToShow": 2
+          }
+        }]
+    };
+    const [nav1, setNav1] = useState(null)
+    const [nav2, setNav2] = useState(null)
+    const slider1 = useRef(null);
+    const slider2 = useRef(null);
+
+    React.useEffect(() => {
+        setNav1(slider1.current)
+        setNav2(slider2.current)
+    }, [])
     return (
         <div className="fix-container">
             <div className="row" style={{ margin: '50px', paddingTop: '20px' }}>
@@ -76,7 +117,7 @@ function TourDetail() {
                         <div className="position-relative">
                             {/* Images Carousel */}
                             <div>
-                                <div id="sliderSyncingNav" className="js-slick-carousel u-slick mb-2" data-infinite="true" data-arrows-classes="d-none d-lg-inline-block u-slick__arrow-classic u-slick__arrow-centered--y rounded-circle" data-arrow-left-classes="flaticon-back u-slick__arrow-classic-inner u-slick__arrow-classic-inner--left ml-lg-2 ml-xl-4" data-arrow-right-classes="flaticon-next u-slick__arrow-classic-inner u-slick__arrow-classic-inner--right mr-lg-2 mr-xl-4" data-nav-for="#sliderSyncingThumb">
+                                <Slider {...settings} ref={slider1} id="sliderSyncingNav" >
                                     <div className="js-slide">
                                         <img className="img-fluid border-radius-3" src={img7} alt="Image Description" />
                                     </div>
@@ -95,7 +136,7 @@ function TourDetail() {
                                     <div className="js-slide">
                                         <img className="img-fluid border-radius-3" src={img12} alt="Image Description" />
                                     </div>
-                                </div>
+                                </Slider>
                                 <div className="position-absolute right-0 mr-3 mt-md-n11 mt-n9">
                                     <div className="flex-horizontal-center">
                                         {/* Video */}
@@ -111,29 +152,29 @@ function TourDetail() {
                                         <img className="js-fancybox d-none" alt="Image Description" data-fancybox="fancyboxGallery6" data-src="../../assets/img/960x490/img9.jpg" data-caption="MyTravel in frames - image #04" data-speed={700} /> */}
                                     </div>
                                 </div>
-                                <div id="sliderSyncingThumb" className="js-slick-carousel u-slick u-slick--gutters-4 u-slick--transform-off" >
-                                    <div className="js-slide mr-fix" style={{ cursor: 'pointer' }}>
-                                        <img className="img-fluid border-radius-3 height-110" src={img7} alt="Image Description" />
+                                <Slider {...settings2} asNavFor={nav1} id="sliderSyncingThumb"
+                                 ref={slider2}
+                               >
+                                    <div className="js-slide mr-fix" >
+                                        <img className="img-fluid1 border-radius-3 height-110" src={img7} alt="Image Description" />
                                     </div>
                                     <div className="js-slide mr-fix" style={{ cursor: 'pointer' }}>
-                                        <img className="img-fluid border-radius-3 height-110" src={img8} alt="Image Description" />
+                                        <img className="img-fluid1 border-radius-3 height-110" src={img8} alt="Image Description" />
                                     </div>
                                     <div className="js-slide mr-fix" style={{ cursor: 'pointer' }}>
-                                        <img className="img-fluid border-radius-3 height-110" src={img9} alt="Image Description" />
+                                        <img className="img-fluid1 border-radius-3 height-110" src={img9} alt="Image Description" />
                                     </div>
                                     <div className="js-slide mr-fix" style={{ cursor: 'pointer' }}>
-                                        <img className="img-fluid border-radius-3 height-110" src={img10} alt="Image Description" />
+                                        <img className="img-fluid1 border-radius-3 height-110" src={img10} alt="Image Description" />
                                     </div>
                                     <div className="js-slide mr-fix" style={{ cursor: 'pointer' }}>
-                                        <img className="img-fluid border-radius-3 height-110" src={img11} alt="Image Description" />
+                                        <img className="img-fluid1 border-radius-3 height-110" src={img11} alt="Image Description" />
                                     </div>
                                     <div className="js-slide mr-fix" style={{ cursor: 'pointer' }}>
-                                        <img className="img-fluid border-radius-3 height-110" src={img12} alt="Image Description" />
+                                        <img className="img-fluid1 border-radius-3 height-110" src={img12} alt="Image Description" />
                                     </div>
-                                </div>
+                                </Slider>
                             </div>
-
-
                             {/* End Images Carousel */}
                         </div>
                     </div>
@@ -149,87 +190,87 @@ function TourDetail() {
                             Itinerary
                         </h5>
                         <div id="basicsAccordion1" >
-                                {/* Card */}
-                                <div className="card border-0 mb-3">
-                                    <div className="card-header border-bottom-0 p-0" id="basicsHeadingOne1"  >
-                                        <h5 className="mb-0">
-                                            <button type="button" className="collapse-link btn btn-link btn-block d-flex align-items-md-center font-weight-bold p-0"  onClick={onshow}>
-                                                <div className="text-primary font-size-22 mb-3 mb-md-0 mr-3">
-                                                    <i className="far fa-circle" />
-                                                </div>
-                                                <div className="text-primary flex-shrink-0">Day 1 <span className="px-2">-</span> </div>
-                                                <h5 className="font-weight-bold text-gray-3 text-left mb-0">Barcelona – Zaragoza – Madrid</h5>
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="basicsCollapseOne1" className="collapse" aria-labelledby="basicsHeadingOne1" data-parent="#basicsAccordion1">
-                                        <div className="card-body pl-6 pb-0 pt-0">
-                                            <p className="mb-0 article">We’ll meet at 4 p.m. at our hotel in Luzern (Lucerne) for a “Welcome to Switzerland” meeting. Then we’ll take a meandering evening walk through Switzerland’s most charming lakeside town, and get acquainted with one another over dinner together. Sleep in Luzern (2 nights). No bus. Walking: light.</p>
-                                        </div>
+                            {/* Card */}
+                            <div className="card border-0 mb-3">
+                                <div className="card-header border-bottom-0 p-0" id="basicsHeadingOne1"  >
+                                    <h5 className="mb-0">
+                                        <button type="button" className="collapse-link btn btn-link btn-block d-flex align-items-md-center font-weight-bold p-0" onClick={onshow}>
+                                            <div className="text-primary font-size-22 mb-3 mb-md-0 mr-3">
+                                                <i className="far fa-circle" />
+                                            </div>
+                                            <div className="text-primary flex-shrink-0">Day 1 <span className="px-2">-</span> </div>
+                                            <h5 className="font-weight-bold text-gray-3 text-left mb-0">Barcelona – Zaragoza – Madrid</h5>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="basicsCollapseOne1" className="collapse" aria-labelledby="basicsHeadingOne1" data-parent="#basicsAccordion1">
+                                    <div className="card-body pl-6 pb-0 pt-0">
+                                        <p className="mb-0 article">We’ll meet at 4 p.m. at our hotel in Luzern (Lucerne) for a “Welcome to Switzerland” meeting. Then we’ll take a meandering evening walk through Switzerland’s most charming lakeside town, and get acquainted with one another over dinner together. Sleep in Luzern (2 nights). No bus. Walking: light.</p>
                                     </div>
                                 </div>
-                                {/* End Card */}
-                                {/* Card */}
-                                <div className="card border-0 mb-3">
-                                    <div className="card-header border-bottom-0 p-0" id="basicsHeadingTwo2" >
-                                        <h5 className="mb-0">
-                                            <button onClick={onshow} type="button" className="collapse-link btn btn-link btn-block d-flex align-items-md-center font-weight-bold p-0" data-toggle="collapse" data-target="#basicsCollapseTwo2" aria-expanded="false" aria-controls="basicsCollapseTwo2">
-                                                <div className="text-primary font-size-22 mb-3 mb-md-0 mr-3">
-                                                    <i className="far fa-circle" />
-                                                </div>
-                                                <div className="text-primary flex-shrink-0">Day 2 <span className="px-2">-</span> </div>
-                                                <h5 className="font-weight-bold text-gray-3 text-left mb-0">Zürich–Biel/Bienne–Neuchâtel–Geneva</h5>
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="basicsCollapseTwo2" className="collapse" aria-labelledby="basicsHeadingTwo2" data-parent="#basicsAccordion1">
-                                        <div className="card-body pl-6 pb-0 pt-0">
-                                            <p className="mb-0 article">We’ll meet at 4 p.m. at our hotel in Luzern (Lucerne) for a “Welcome to Switzerland” meeting. Then we’ll take a meandering evening walk through Switzerland’s most charming lakeside town, and get acquainted with one another over dinner together. Sleep in Luzern (2 nights). No bus. Walking: light.</p>
-                                        </div>
+                            </div>
+                            {/* End Card */}
+                            {/* Card */}
+                            <div className="card border-0 mb-3">
+                                <div className="card-header border-bottom-0 p-0" id="basicsHeadingTwo2" >
+                                    <h5 className="mb-0">
+                                        <button onClick={onshow} type="button" className="collapse-link btn btn-link btn-block d-flex align-items-md-center font-weight-bold p-0" data-toggle="collapse" data-target="#basicsCollapseTwo2" aria-expanded="false" aria-controls="basicsCollapseTwo2">
+                                            <div className="text-primary font-size-22 mb-3 mb-md-0 mr-3">
+                                                <i className="far fa-circle" />
+                                            </div>
+                                            <div className="text-primary flex-shrink-0">Day 2 <span className="px-2">-</span> </div>
+                                            <h5 className="font-weight-bold text-gray-3 text-left mb-0">Zürich–Biel/Bienne–Neuchâtel–Geneva</h5>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="basicsCollapseTwo2" className="collapse" aria-labelledby="basicsHeadingTwo2" data-parent="#basicsAccordion1">
+                                    <div className="card-body pl-6 pb-0 pt-0">
+                                        <p className="mb-0 article">We’ll meet at 4 p.m. at our hotel in Luzern (Lucerne) for a “Welcome to Switzerland” meeting. Then we’ll take a meandering evening walk through Switzerland’s most charming lakeside town, and get acquainted with one another over dinner together. Sleep in Luzern (2 nights). No bus. Walking: light.</p>
                                     </div>
                                 </div>
-                                {/* End Card */}
-                                {/* Card */}
-                                <div className="card border-0 mb-3">
-                                    <div className="card-header border-bottom-0 p-0" id="basicsHeadingThree3" >
-                                        <h5 className="mb-0">
-                                            <button onClick={onshow} type="button" className="collapse-link btn btn-link btn-block d-flex align-items-md-center font-weight-bold p-0" data-toggle="collapse" data-target="#basicsCollapseThree3" aria-expanded="false" aria-controls="basicsCollapseThree3">
-                                                <div className="text-primary font-size-22 mb-3 mb-md-0 mr-3">
-                                                    <i className="far fa-circle" />
-                                                </div>
-                                                <div className="text-primary flex-shrink-0">Day 3 <span className="px-2">-</span> </div>
-                                                <h5 className="font-weight-bold text-gray-3 text-left mb-0">Enchanting Engelberg</h5>
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="basicsCollapseThree3" className="collapse" aria-labelledby="basicsHeadingThree3" data-parent="#basicsAccordion1" >
-                                        <div className="card-body pl-6 pb-0 pt-0">
-                                            <p className="mb-0 article">We’ll meet at 4 p.m. at our hotel in Luzern (Lucerne) for a “Welcome to Switzerland” meeting. Then we’ll take a meandering evening walk through Switzerland’s most charming lakeside town, and get acquainted with one another over dinner together. Sleep in Luzern (2 nights). No bus. Walking: light.</p>
-                                        </div>
+                            </div>
+                            {/* End Card */}
+                            {/* Card */}
+                            <div className="card border-0 mb-3">
+                                <div className="card-header border-bottom-0 p-0" id="basicsHeadingThree3" >
+                                    <h5 className="mb-0">
+                                        <button onClick={onshow} type="button" className="collapse-link btn btn-link btn-block d-flex align-items-md-center font-weight-bold p-0" data-toggle="collapse" data-target="#basicsCollapseThree3" aria-expanded="false" aria-controls="basicsCollapseThree3">
+                                            <div className="text-primary font-size-22 mb-3 mb-md-0 mr-3">
+                                                <i className="far fa-circle" />
+                                            </div>
+                                            <div className="text-primary flex-shrink-0">Day 3 <span className="px-2">-</span> </div>
+                                            <h5 className="font-weight-bold text-gray-3 text-left mb-0">Enchanting Engelberg</h5>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="basicsCollapseThree3" className="collapse" aria-labelledby="basicsHeadingThree3" data-parent="#basicsAccordion1" >
+                                    <div className="card-body pl-6 pb-0 pt-0">
+                                        <p className="mb-0 article">We’ll meet at 4 p.m. at our hotel in Luzern (Lucerne) for a “Welcome to Switzerland” meeting. Then we’ll take a meandering evening walk through Switzerland’s most charming lakeside town, and get acquainted with one another over dinner together. Sleep in Luzern (2 nights). No bus. Walking: light.</p>
                                     </div>
                                 </div>
-                                {/* End Card */}
-                                {/* Card */}
-                                <div className="card border-0 mb-3">
-                                    <div className="card-header border-bottom-0 p-0" id="basicsHeadingFour4">
-                                        <h5 className="mb-0">
-                                            <button onClick={onshow} type="button" className="collapse-link btn btn-link btn-block d-flex align-items-md-center font-weight-bold p-0" data-toggle="collapse" data-target="#basicsCollapseFour4" aria-expanded="false" aria-controls="basicsCollapseFour4">
-                                                <div className="text-primary font-size-22 mb-3 mb-md-0 mr-3">
-                                                    <i className="far fa-circle" />
-                                                </div>
-                                                <div className="text-primary flex-shrink-0">Day 4 <span className="px-2">-</span> </div>
-                                                <h5 className="font-weight-bold text-gray-3 text-left mb-0">Interlaken Area. Excursion to The Jungfrau Massif</h5>
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="basicsCollapseFour4" className="collapse" aria-labelledby="basicsHeadingFour4" data-parent="#basicsAccordion1">
-                                        <div className="card-body pl-6 pb-0 pt-0">
-                                            <p className="mb-0 article">We’ll meet at 4 p.m. at our hotel in Luzern (Lucerne) for a “Welcome to Switzerland” meeting. Then we’ll take a meandering evening walk through Switzerland’s most charming lakeside town, and get acquainted with one another over dinner together. Sleep in Luzern (2 nights). No bus. Walking: light.</p>
-                                        </div>
+                            </div>
+                            {/* End Card */}
+                            {/* Card */}
+                            <div className="card border-0 mb-3">
+                                <div className="card-header border-bottom-0 p-0" id="basicsHeadingFour4">
+                                    <h5 className="mb-0">
+                                        <button onClick={onshow} type="button" className="collapse-link btn btn-link btn-block d-flex align-items-md-center font-weight-bold p-0" data-toggle="collapse" data-target="#basicsCollapseFour4" aria-expanded="false" aria-controls="basicsCollapseFour4">
+                                            <div className="text-primary font-size-22 mb-3 mb-md-0 mr-3">
+                                                <i className="far fa-circle" />
+                                            </div>
+                                            <div className="text-primary flex-shrink-0">Day 4 <span className="px-2">-</span> </div>
+                                            <h5 className="font-weight-bold text-gray-3 text-left mb-0">Interlaken Area. Excursion to The Jungfrau Massif</h5>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="basicsCollapseFour4" className="collapse" aria-labelledby="basicsHeadingFour4" data-parent="#basicsAccordion1">
+                                    <div className="card-body pl-6 pb-0 pt-0">
+                                        <p className="mb-0 article">We’ll meet at 4 p.m. at our hotel in Luzern (Lucerne) for a “Welcome to Switzerland” meeting. Then we’ll take a meandering evening walk through Switzerland’s most charming lakeside town, and get acquainted with one another over dinner together. Sleep in Luzern (2 nights). No bus. Walking: light.</p>
                                     </div>
                                 </div>
-                                {/* End Card */}
-                            
+                            </div>
+                            {/* End Card */}
+
                         </div>
                     </div>
                     <div className="border-bottom py-4">

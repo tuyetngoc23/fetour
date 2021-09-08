@@ -2,11 +2,16 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react'
+import {useEffect, useState} from 'react'
 import '../style/home.css'
 import image_da_nang from '../asset/images/da_nang.jpg'
 import image_coco from '../asset/images/coco-beach-phan-thiet.jpg'
+import {Link} from 'react-router-dom'
 
 function Home() {
+
+     const [tours, settours] = useState();
+
     return (
         <>
             <div className="where_togo_area">
@@ -21,7 +26,7 @@ function Home() {
                             <div className="search_wrap">
                                 <form className="search_form" action="#">
                                     <div className="input_field">
-                                        <input id="datepicker" placeholder="Date" type="date" />
+                                        <input id="datepicker" placeholder="Date" type="date"/>
                                     </div>
                                     <div className="input_field">
                                         <select className="choose">
@@ -38,7 +43,7 @@ function Home() {
                                         </select>
                                     </div>
                                     <div className="search_btn">
-                                        <button className="boxed-btn4 " type="submit">Search</button>
+                                        <Link to="/tour"><button className="boxed-btn4 " type="submit">Search</button></Link>
                                     </div>
                                 </form>
                             </div>
@@ -98,7 +103,7 @@ function Home() {
                     </div>
                     <div className="row">
                         <div className="col-lg-4 col-md-4 col-sm-6">
-                            <a href="images/img_1.jpg" className="fh5co-card-item image-popup">
+                            <Link to="/blogdetail" className="fh5co-card-item image-popup">
                                 <figure>
                                     <img src={`${process.env.PUBLIC_URL}/asset/images/cucangchai.jpg`} alt="Image" className="img-responsive" />
                                 </figure>
@@ -107,7 +112,7 @@ function Home() {
                                     <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
                                     <p><span className="btn btn-primary">Read More</span></p>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
                         <div className="col-lg-4 col-md-4 col-sm-6">
                             <a href="images/img_2.jpg" className="fh5co-card-item image-popup">
@@ -172,8 +177,6 @@ function Home() {
                     </div>
                 </div>
             </div>
-
-
         </>
 
     )

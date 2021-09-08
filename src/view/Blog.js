@@ -7,6 +7,7 @@ import vinhlanha from '../asset/images/Vịnh-Lan-Hạ.jpg'
 import taynguyen from '../asset/images/tay-nguyen.jpg'
 import songhuong from '../asset/images/songhuong.jpg'
 import sapaaa from '../asset/images/sapaaa.jpg'
+import {Link} from 'react-router-dom'
 
 function Blog() {
     return (
@@ -27,10 +28,10 @@ function Blog() {
                                         </ul>
                                     </div>
                                     <div className="details mt-20">
-                                        <a href="#">
+                                        <Link to="/blogdetail">
                                             <h3>Woman claims husband wants to name baby girl
                                                 after his ex-lover sparking.</h3>
-                                        </a>
+                                        </Link>
                                         <p>Over yielding doesn't so moved green saw meat hath fish he him from given yielding
                                             lesser cattle were fruitful lights. Given let have, lesser their made him above
                                             gathered dominion sixth. Creeping deep said can't called second. Air created seed

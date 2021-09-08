@@ -24,10 +24,11 @@
     /* margin-left: 5px; */
     margin-right: 5px;
 }
-/* .img-fluid {
+.img-fluid1 {
     max-width: 100%;
     height: auto;
-} */
+    padding: 3px;
+}
 .height-110{
     height: 110px;
     /* -o-object-fit: cover; */

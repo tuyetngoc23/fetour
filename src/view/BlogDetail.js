@@ -18,7 +18,7 @@ function BlogDetail() {
                     <div className="row">
                         <div className="col-lg-8">
                             <div className="main_blog_details">
-                                <img className="img-fluid fix" src={sapaaa} alt/>
+                                <img className="img-fluid fix" src={sapaaa} alt="image blogdetail"/>
                                 <a href="#">
                                     <h4>Cartridge Is Better Than Ever <br /> A Discount Toner</h4>
                                 </a>
@@ -30,7 +30,7 @@ function BlogDetail() {
                                                 <p>12 Dec, 2017 11:21 am</p>
                                             </div>
                                             <div className="d-flex">
-                                                <img style={{width: '42px', height:'42px'}} src={people} alt/>
+                                                <img style={{width: '42px', height:'42px'}} src={people} alt="image blogdetail"/>
                                             </div>
                                         </div>
                                     </div>
@@ -62,7 +62,7 @@ function BlogDetail() {
                                     <div className="single-comment justify-content-between d-flex">
                                         <div className="user justify-content-between d-flex">
                                             <div className="thumb">
-                                                <img src={people} alt data-pagespeed-url-hash={323181169} />
+                                                <img src={people} alt="image blogdetail" />
                                             </div>
                                             <div className="desc">
                                                 <h5>Emilly Blunt</h5>
@@ -78,7 +78,7 @@ function BlogDetail() {
                                     <div className="single-comment justify-content-between d-flex">
                                         <div className="user justify-content-between d-flex">
                                             <div className="thumb">
-                                                <img src={people} alt data-pagespeed-url-hash={617681090} onload="pagespeed.CriticalImages.checkImageForCriticality(this);" />
+                                                <img src={people} alt="image blogdetail" />
                                             </div>
                                             <div className="desc">
                                                 <h5>Elsie Cunningham</h5>
@@ -94,7 +94,7 @@ function BlogDetail() {
                                     <div className="single-comment justify-content-between d-flex">
                                         <div className="user justify-content-between d-flex">
                                             <div className="thumb">
-                                                <img src={people} alt data-pagespeed-url-hash={912181011} onload="pagespeed.CriticalImages.checkImageForCriticality(this);" />
+                                                <img src={people} alt="image blogdetail"  />
                                             </div>
                                             <div className="desc">
                                                 <h5>Annie Stephens</h5>
@@ -110,7 +110,7 @@ function BlogDetail() {
                                     <div className="single-comment justify-content-between d-flex">
                                         <div className="user justify-content-between d-flex">
                                             <div className="thumb">
-                                                <img src={people} alt data-pagespeed-url-hash={1206680932} onload="pagespeed.CriticalImages.checkImageForCriticality(this);" />
+                                                <img src={people} alt="image blogdetail"  />
                                             </div>
                                             <div className="desc">
                                                 <h5>Maria Luna</h5>
@@ -126,7 +126,7 @@ function BlogDetail() {
                                     <div className="single-comment justify-content-between d-flex">
                                         <div className="user justify-content-between d-flex">
                                             <div className="thumb">
-                                                <img src={people} alt data-pagespeed-url-hash={1501180853} onload="pagespeed.CriticalImages.checkImageForCriticality(this);" />
+                                                <img src={people} alt="image blogdetail" />
                                             </div>
                                             <div className="desc">
                                                 <h5>Ina Hayes</h5>

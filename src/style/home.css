@@ -193,7 +193,7 @@
 }
 .where_togo_area .search_wrap .input_field {
   width: 250px;
-  
+  margin-right: 3px;
 }
 .where_togo_area .search_wrap .input_field input {
   width: 100%;
