@@ -29,6 +29,13 @@
     height: auto;
     padding: 3px;
 }
+.resize-img{
+    width: 931px;
+    height:475px ;
+}
+.resize1-img{
+    width: 210px;
+}
 .height-110{
     height: 110px;
     /* -o-object-fit: cover; */

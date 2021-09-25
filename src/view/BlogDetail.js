@@ -3,12 +3,73 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import '../style/blogdetail.css'
-import sapaaa from '../asset/images/sapaaa.jpg'
-import people from '../asset/images/people.png'
-import taynguyen from '../asset/images/tay-nguyen.jpg'
-import songhuong from '../asset/images/songhuong.jpg'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { Link, useParams } from 'react-router-dom'
+import Moment from 'react-moment'
+// import Pagination from 'react-js-pagination'
+
+
 
 function BlogDetail() {
+    const { id } = useParams();
+    //getBlog
+    const [blog, setBlog] = useState();
+    useEffect(() => {
+        axios
+            .get(`http://localhost:9090/blog/${id}`)
+            .then(res => {
+                setBlog(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [id])
+    console.log(blog)
+    //lay ds comment
+    
+    const [comment, setComment] = useState([]);
+    const [comment1, setComment1] = useState([]);
+    const [comment2, setComment2] = useState([]);
+    const [soComment, setSoComment] = useState(0);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:9090/blog/comment/${id}`)
+            .then(res => {
+                setComment(res.data)
+                setSoComment(res.data.length/2);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [id])
+    
+    useEffect(() => {
+        setComment1(comment.slice(0,soComment));
+        setComment2(comment.slice(soComment));
+    }, [comment])
+
+    console.log(comment);
+    console.log(comment1);
+    console.log(comment2);
+    console.log(soComment);
+    //get List Blog
+    const [blogs, setBlogs] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:9090/blog`)
+            .then(res => {
+                setBlogs(res.data.slice(-4))
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [])
+
+    console.log(blogs);
+
     return (
 
         <>
@@ -16,195 +77,101 @@ function BlogDetail() {
             <section className="blog-post-area section-margin">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-8">
-                            <div className="main_blog_details">
-                                <img className="img-fluid fix" src={sapaaa} alt="image blogdetail"/>
-                                <a href="#">
-                                    <h4>Cartridge Is Better Than Ever <br /> A Discount Toner</h4>
-                                </a>
-                                <div className="user_details">
-                                    <div className="float-right mt-sm-0 mt-3">
-                                        <div className="media">
-                                            <div className="media-body">
-                                                <h5>Mark wiens</h5>
-                                                <p>12 Dec, 2017 11:21 am</p>
-                                            </div>
-                                            <div className="d-flex">
-                                                <img style={{width: '42px', height:'42px'}} src={people} alt="image blogdetail"/>
+                        {
+                            blog &&
+                            <div className="col-lg-8">
+                                <div className="main_blog_details">
+                                    <img className="img-fluid fix" src={`${process.env.PUBLIC_URL}/asset/images/${blog.image}`} alt="image blogdetail" />
+                                    <Link to={`/blogdetail/${blog.id}`}>
+                                        <h4>{blog.title}</h4>
+                                    </Link>
+                                    <div className="user_details">
+                                        <div className="float-right mt-sm-0 mt-3">
+                                            <div className="media">
+                                                <div className="media-body">
+                                                    <h5>{blog.wname}</h5>
+                                                    <p><Moment format="yyyy-MMM-D">{blog.wdate}</Moment></p>
+                                                </div>
+                                                <div className="d-flex">
+                                                    <img style={{ width: '42px', height: '42px' }} src={`${process.env.PUBLIC_URL}/asset/images/${blog.usertour.avatar}`} alt="image blogdetail" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <p>{blog.content}</p>
+                                    <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                                        you should have to spend money on boot camp when you can get the MCSE study materials
+                                        yourself at a fraction of the camp price. However, who has the willpower to actually sit
+                                        through a self-imposed MCSE training. who has the willpower to actually sit through a
+                                        self-imposed MCSE training.</p>
+                                    <blockquote className="blockquote">
+                                        <p className="mb-0">MCSE boot camps have its supporters and its detractors. Some people do
+                                            not understand why you should have to spend money on boot camp when you can get the
+                                            MCSE study materials yourself at a fraction of the camp price. However, who has the
+                                            willpower to actually sit through a self-imposed MCSE training.</p>
+                                    </blockquote>
                                 </div>
-                                <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
-                                    you should have to spend money on boot camp when you can get the MCSE study materials
-                                    yourself at a fraction of the camp price. However, who has the willpower</p>
-                                <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
-                                    you should have to spend money on boot camp when you can get the MCSE study materials
-                                    yourself at a fraction of the camp price. However, who has the willpower to actually sit
-                                    through a self-imposed MCSE training. who has the willpower to actually sit through a
-                                    self-imposed MCSE training.</p>
-                                <blockquote className="blockquote">
-                                    <p className="mb-0">MCSE boot camps have its supporters and its detractors. Some people do
-                                        not understand why you should have to spend money on boot camp when you can get the
-                                        MCSE study materials yourself at a fraction of the camp price. However, who has the
-                                        willpower to actually sit through a self-imposed MCSE training.</p>
-                                </blockquote>
-                                <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
-                                    you should have to spend money on boot camp when you can get the MCSE study materials
-                                    yourself at a fraction of the camp price. However, who has the willpower</p>
-                                <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
-                                    you should have to spend money on boot camp when you can get the MCSE study materials
-                                    yourself at a fraction of the camp price. However, who has the willpower</p>
-                            </div>
-                            <div className="comments-area">
-                                <h4>05 Comments</h4>
-                                <div className="comment-list">
-                                    <div className="single-comment justify-content-between d-flex">
-                                        <div className="user justify-content-between d-flex">
-                                            <div className="thumb">
-                                                <img src={people} alt="image blogdetail" />
+                                <div className="comments-area">
+                                    <h4>{comment.length} Comments</h4>
+                                    {
+                                        comment.map(item => (
+                                            <div className="comment-list" key={item.id}>
+                                                <div className="single-comment justify-content-between d-flex">
+                                                    <div className="user justify-content-between d-flex">
+                                                        <div className="thumb">
+                                                            <img src={`${process.env.PUBLIC_URL}/asset/images/${item.usertour.avatar}`} alt="image blogdetail" />
+                                                        </div>
+                                                        <div className="desc">
+                                                            <h5>{item.usertour.username}</h5>
+                                                            <p className="date"><Moment format="MMM D, YYYY">{item.date}</Moment></p>
+                                                            <p className="comment">
+                                                                {item.content}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="desc">
-                                                <h5>Emilly Blunt</h5>
-                                                <p className="date">December 4, 2017 at 3:12 pm </p>
-                                                <p className="comment">
-                                                    Never say goodbye till the end comes!
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        ))
+                                    }
                                 </div>
-                                <div className="comment-list left-padding">
-                                    <div className="single-comment justify-content-between d-flex">
-                                        <div className="user justify-content-between d-flex">
-                                            <div className="thumb">
-                                                <img src={people} alt="image blogdetail" />
-                                            </div>
-                                            <div className="desc">
-                                                <h5>Elsie Cunningham</h5>
-                                                <p className="date">December 4, 2017 at 3:12 pm </p>
-                                                <p className="comment">
-                                                    Never say goodbye till the end comes!
-                                                </p>
-                                            </div>
+                                <div className="comment-form">
+                                    <h4>Leave a Reply</h4>
+                                    <form action="#">
+                                        <div className="form-group">
+                                            <textarea className="form-control mb-10" rows={5} name="message" placeholder="Messege" required />
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="comment-list left-padding">
-                                    <div className="single-comment justify-content-between d-flex">
-                                        <div className="user justify-content-between d-flex">
-                                            <div className="thumb">
-                                                <img src={people} alt="image blogdetail"  />
-                                            </div>
-                                            <div className="desc">
-                                                <h5>Annie Stephens</h5>
-                                                <p className="date">December 4, 2017 at 3:12 pm </p>
-                                                <p className="comment">
-                                                    Never say goodbye till the end comes!
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="comment-list">
-                                    <div className="single-comment justify-content-between d-flex">
-                                        <div className="user justify-content-between d-flex">
-                                            <div className="thumb">
-                                                <img src={people} alt="image blogdetail"  />
-                                            </div>
-                                            <div className="desc">
-                                                <h5>Maria Luna</h5>
-                                                <p className="date">December 4, 2017 at 3:12 pm </p>
-                                                <p className="comment">
-                                                    Never say goodbye till the end comes!
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="comment-list">
-                                    <div className="single-comment justify-content-between d-flex">
-                                        <div className="user justify-content-between d-flex">
-                                            <div className="thumb">
-                                                <img src={people} alt="image blogdetail" />
-                                            </div>
-                                            <div className="desc">
-                                                <h5>Ina Hayes</h5>
-                                                <p className="date">December 4, 2017 at 3:12 pm </p>
-                                                <p className="comment">
-                                                    Never say goodbye till the end comes!
-                                                </p>
-                                            </div>
-                                        </div>
-                                        {/* <div class="reply-btn">
-                                  <a href="" class="btn-reply text-uppercase">reply</a>
-                              </div> */}
-                                    </div>
+                                        <input type="submit" className="button submit_btn" value="Post Comment" />
+                                    </form>
                                 </div>
                             </div>
-                            <div className="comment-form">
-                                <h4>Leave a Reply</h4>
-                                <form action="#">
-                                    <div className="form-group">
-                                        <textarea className="form-control mb-10" rows={5} name="message" placeholder="Messege" required />
+                        }
+                        <div className="col-lg-4 sidebar-widgets">
+                            <div className="widget-wrap">
+                                <div className="single-sidebar-widget popular-post-widget">
+                                    <h3 className="single-sidebar-widget__title">Blog Mới Nhất</h3>
+                                    <div className="popular-post-list">
+                                        {
+                                            blogs.length > 0 && blogs.map(blog => (
+                                                <div className="single-post-list" key={blog.id}>
+                                                    <div className="thumb">
+                                                        <img className="card-img rounded-0" src={`${process.env.PUBLIC_URL}/asset/images/${blog.image}`} alt="image blog" />
+                                                        <ul className="thumb-info">
+                                                            <li><Link to={`/blogdetail/${blog.id}`}>{blog.wname}</Link></li>
+                                                            <li><Link to={`/blogdetail/${blog.id}`}><Moment format="MMM D">{blog.wdate}</Moment></Link></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div className="details mt-20">
+                                                        <Link to={`/blogdetail/${blog.id}`}>
+                                                            <h6>{blog.title}</h6>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
-                                    <input type="submit" className="button submit_btn" value="Post Comment" />
-                                </form>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 sidebar-widgets">
-                                <div className="widget-wrap">
-                                    <div className="single-sidebar-widget popular-post-widget">
-                                        <h3 className="single-sidebar-widget__title">Popular Post</h3>
-                                        <div className="popular-post-list">
-                                            <div className="single-post-list">
-                                                <div className="thumb">
-                                                    <img className="card-img rounded-0" src={sapaaa} alt="image blog" />
-                                                    <ul className="thumb-info">
-                                                        <li><a href="#">Adam Colinge</a></li>
-                                                        <li><a href="#">Dec 15</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div className="details mt-20">
-                                                    <a href="#">
-                                                        <h6>Accused of assaulting flight attendant miktake alaways</h6>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div className="single-post-list">
-                                                <div className="thumb">
-                                                    <img className="card-img rounded-0" src={songhuong} alt="image blog" />
-                                                    <ul className="thumb-info">
-                                                        <li><a href="#">Adam Colinge</a></li>
-                                                        <li><a href="#">Dec 15</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div className="details mt-20">
-                                                    <a href="#">
-                                                        <h6>Tennessee outback steakhouse the
-                                                            worker diagnosed</h6>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div className="single-post-list">
-                                                <div className="thumb">
-                                                    <img className="card-img rounded-0" src={taynguyen} alt="image blog" />
-                                                    <ul className="thumb-info">
-                                                        <li><a href="#">Adam Colinge</a></li>
-                                                        <li><a href="#">Dec 15</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div className="details mt-20">
-                                                    <a href="#">
-                                                        <h6>Tennessee outback steakhouse the
-                                                            worker diagnosed</h6>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                     </div>
                 </div>
             </section>

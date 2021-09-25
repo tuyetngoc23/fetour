@@ -7,6 +7,8 @@ import TourDetail from './view/TourDetail';
 import Blog from './view/Blog'
 import BlogDetail from './view/BlogDetail';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Booking from './view/Booking';
+import OrderDetail from './view/OrderDetail';
 // import "swiper/css/bundle";
 
 function App() {
@@ -18,8 +20,12 @@ function App() {
           <Route exact path="/" component={Home}></Route>
           <Route  path="/tour" component={Tour}></Route>
           <Route  path="/blog" component={Blog}></Route>
-          <Route  path="/blogdetail" component={BlogDetail}></Route>
-          <Route  path="/tourdetail" component={TourDetail}></Route>
+          <Route  path="/blogdetail/:id" component={BlogDetail}></Route>
+          {/* <Redirect from="*" to="/tourdetail/:id" />
+          <Route  path="/tourdetail" component={TourDetail}></Route> */}
+          <Route  path="/tourdetail/:id" component={TourDetail}></Route>
+          <Route  path="/booking" component={Booking}></Route>
+          <Route  path="/orderdetail" component={OrderDetail}></Route>
         </Switch>
         <Footer />
       </BrowserRouter>

@@ -1,7 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 
 function Footer() {
+    //get List Blog
+    const [blogs, setBlogs] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:9090/blog`)
+            .then(res => {
+                setBlogs(res.data.slice(-2))
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [])
     return (
         <>
             <footer className=" footer-corporate context-dark">
@@ -22,7 +39,7 @@ function Footer() {
                                             <li>
                                                 <div className="unit">
                                                     <div ><span className="icon fa fa-envelope" /></div>
-                                                    <div><a className="link-aemail" href="mailto:#">info@demolink.org</a></div>
+                                                    <div><a className="link-email" href="mailto:#">info@demolink.org</a></div>
                                                 </div>
                                             </li>
                                             <li>
@@ -40,19 +57,16 @@ function Footer() {
                                     <div className="slideInDown">
                                         <h6 className="text-spacing-100 text-uppercase">Popular news</h6>
                                         {/* Post Minimal 2*/}
-                                        <article className="post post-minimal-2">
-                                            <p ><a href="#">Your Personal Guide to 5 Best Places to Visit on Earth</a></p>
-                                            <div>
-                                                <time dateTime="2019-05-04">May 04, 2019</time>
-                                            </div>
-                                        </article>
-                                        {/* Post Minimal 2*/}
-                                        <article className="post post-minimal-2">
-                                            <p ><a href="#">Top 10 Hotels: Rating by Wonder Tour Travel Experts</a></p>
-                                            <div>
-                                                <time dateTime="2019-05-04">May 04, 2019</time>
-                                            </div>
-                                        </article>
+                                        {
+                                            blogs.length > 0 && blogs.map(item => (
+                                                <article className="post post-minimal-2" key={item.id}>
+                                                    <p ><Link to={`/blogdetail/${item.id}`}>{item.title}</Link></p>
+                                                    <div>
+                                                        <time dateTime="2019-05-04"><Moment format="MMM DD, YYYY">{item.wdate}</Moment></time>
+                                                    </div>
+                                                </article>
+                                            ))
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +87,7 @@ function Footer() {
                         </div>
                     </div>
                 </div>
-                
+
             </footer>
         </>
 

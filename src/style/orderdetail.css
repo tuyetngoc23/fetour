@@ -1,0 +1,114 @@
+.confirmation-page-default {
+    margin-top: 50px;
+    margin-bottom: 140px;
+}
+.babe_message_order{
+    border: 0;
+    color: #7cc566;
+    background-color: #f8f8f8;
+    padding: 2em 1em;
+    margin-bottom: 40px;
+    text-align: center;
+    display: block;
+    font-size: 18px;
+}
+.confirmation-information {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 850px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+.confirmation-information>div {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    text-align: center;
+    border-right: 1px solid;
+    border-right-color: #e5e5e5;
+}
+.confirmation-information div .title {
+    font-size: 14px;
+    margin-bottom: 3px;
+    color: #666666;
+}
+.confirmation-information div .content {
+    font-size: 14px;
+}
+.order-details-table {
+    max-width: 630px;
+    margin: 0 auto;
+}
+.order-details-table .order-heading {
+    font-size: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 38px;
+    font-weight:700;
+}
+.order-details-table .order-body {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 35px;
+    padding-bottom: 25px;
+    border-top: 1px solid;
+    border-top-color: #e5e5e5;
+}
+.order-details-table .order-body .order-content {
+    width: 85%;
+    padding-right: 15px;
+}
+.order-details-table .order-body .order-content>div:first-child {
+    margin-bottom: 7px;
+}
+.order-details-table .order-body .order-content>div:first-child *{
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+}
+.order-details-table .order-body .order-content>div {
+    margin-bottom: 5px;
+}
+.order-details-table .order-body .order-content>div:last-child {
+    margin-bottom: 0;
+}
+.order-details-table .order-body .order-content>div .label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #666666;
+}
+.order-details-table .order-body .date-time span.date {
+    margin-right: 5px;
+}
+.order-details-table .order-body .order-content>div .value {
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+}
+.order-details-table .order-total-subtotal {
+    background-color: #f6f6f6;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-top: 1px solid;
+    border-top-color: #e5e5e5;
+}
+.order-details-table .order-total-subtotal .order_items_total {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 6px;
+}
+.order-details-table .order-total-subtotal .order_items_total .label {
+    width: 85%;
+    text-align: right;
+    padding-right: 15px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #666666;
+}
+.order-details-table .order-total-subtotal .order_items_total .amount-total .currency_amount {
+    font-size: 18px;
+    color: #dc834e;
+}
