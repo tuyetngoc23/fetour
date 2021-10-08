@@ -10,7 +10,7 @@
     margin-bottom: 40px;
     text-align: center;
     display: block;
-    font-size: 18px;
+    font-size: 20px;
 }
 .confirmation-information {
     display: flex;
@@ -30,7 +30,7 @@
     border-right-color: #e5e5e5;
 }
 .confirmation-information div .title {
-    font-size: 14px;
+    font-size: 18px;
     margin-bottom: 3px;
     color: #666666;
 }
@@ -42,7 +42,7 @@
     margin: 0 auto;
 }
 .order-details-table .order-heading {
-    font-size: 24px;
+    font-size: 25px;
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 38px;
@@ -50,14 +50,14 @@
 }
 .order-details-table .order-body {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     padding-top: 35px;
     padding-bottom: 25px;
     border-top: 1px solid;
     border-top-color: #e5e5e5;
 }
 .order-details-table .order-body .order-content {
-    width: 85%;
+    width: 70%;
     padding-right: 15px;
 }
 .order-details-table .order-body .order-content>div:first-child {
@@ -75,7 +75,7 @@
     margin-bottom: 0;
 }
 .order-details-table .order-body .order-content>div .label {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     color: #666666;
 }
@@ -83,7 +83,7 @@
     margin-right: 5px;
 }
 .order-details-table .order-body .order-content>div .value {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     color: #666666;
 }
@@ -105,10 +105,10 @@
     text-align: right;
     padding-right: 15px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
     color: #666666;
 }
-.order-details-table .order-total-subtotal .order_items_total .amount-total .currency_amount {
+/* .order-details-table .order-total-subtotal .order_items_total .amount-total .currency_amount {
     font-size: 18px;
-    color: #dc834e;
-}
+    color: #09C6AB;
+} */

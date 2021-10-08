@@ -29,31 +29,19 @@ function BlogDetail() {
     //lay ds comment
     
     const [comment, setComment] = useState([]);
-    const [comment1, setComment1] = useState([]);
-    const [comment2, setComment2] = useState([]);
-    const [soComment, setSoComment] = useState(0);
 
     useEffect(() => {
         axios
             .get(`http://localhost:9090/blog/comment/${id}`)
             .then(res => {
                 setComment(res.data)
-                setSoComment(res.data.length/2);
             })
             .catch(err => {
                 console.log(err);
             })
     }, [id])
     
-    useEffect(() => {
-        setComment1(comment.slice(0,soComment));
-        setComment2(comment.slice(soComment));
-    }, [comment])
-
-    console.log(comment);
-    console.log(comment1);
-    console.log(comment2);
-    console.log(soComment);
+    
     //get List Blog
     const [blogs, setBlogs] = useState([]);
 

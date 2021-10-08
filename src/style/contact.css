@@ -1,0 +1,48 @@
+.contact-container{
+    display: flex;
+}
+.gtco-contact-info{
+    float: right;
+}
+.field_input input{
+    margin-bottom: 10px;
+}
+.gtco-contact-info ul li {
+    margin: 0 0 30px 0;
+    list-style: none;
+}
+.gtco-contact-info ul li *{
+    color: #09C6AB;
+}
+.gtco-contact-info ul li>i{
+    padding-right: 5px;
+    color: #cccccc;
+}
+/* .gtco-contact-info ul li.i:before {
+    color: #cccccc;
+    position: absolute;
+    left: 0;
+    top: .05em;
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    Better Font Rendering ===========
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  } */
+.button_send{
+    margin: 10px auto;
+}
+.send_message{
+    background: #09C6AB;
+    color: #fff;
+    border: 2px solid #09C6AB !important;
+}
+.send_message:hover{
+    background: #1fe6c8;
+    border: 2px solid #1fe6c8 !important;
+}

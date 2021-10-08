@@ -2,13 +2,41 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext} from 'react'
 import '../style/home.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import NumberFormat from 'react-number-format';
+import { useHistory } from 'react-router'
 
 function Home() {
+    
+    //getProvince
+    const [province, setProvince] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:9090/place/province`)
+            .then(res => {
+                setProvince(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [])
+    //get cattour
+    const [cat, setCat] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:9090/cat`)
+            .then(res => {
+                setCat(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [])
 
     //get List Tours
     const [tours, setTours] = useState([]);
@@ -24,8 +52,6 @@ function Home() {
             })
     }, [])
 
-    console.log(tours);
-
     //get List Blog
     const [blogs, setBlogs] = useState([]);
 
@@ -40,6 +66,19 @@ function Home() {
             })
     }, [])
 
+    //
+    const [date, setDate] = useState('');
+    const [cattour, setCattour] = useState('')
+    const [prov, setProv] = useState('')
+    
+    const history = useHistory();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // alert(`${date}, ${cattour}, ${prov}`);
+        history.push(`/tour?date=${date}&cattour=${cattour}&prov=${prov}`);
+    }
+
+
     return (
         <>
             <div className="where_togo_area">
@@ -52,26 +91,32 @@ function Home() {
                         </div>
                         <div className="col-lg-9">
                             <div className="search_wrap">
-                                <form className="search_form" action="#">
+                                <form className="search_form" onSubmit={handleSubmit}>
                                     <div className="input_field">
-                                        <input id="datepicker" placeholder="Date" type="date" />
+                                        <input id="datepicker" placeholder="Date" type="date" name="date" value={date} onChange={(e) => setDate(e.target.value)}/>
                                     </div>
                                     <div className="input_field">
-                                        <select className="choose">
+                                        <select className="choose" value={cattour} name="cattour" onChange={(e) => setCattour(e.target.value)}>
                                             <option data-display="Tour Type">Tour Type</option>
-                                            <option value={1}>Some option</option>
-                                            <option value={2}>Another option</option>
+                                            {
+                                                cat.length > 0 && cat.map(item => (
+                                                    <option value={item.id} key={item.id}>{item.name}</option>
+                                                ))
+                                            }
                                         </select>
                                     </div>
                                     <div className="input_field">
-                                        <select className="choose">
+                                        <select className="choose" value={prov} name="prov" onChange={(e) => setProv(e.target.value)}>
                                             <option data-display="Destination">Destination</option>
-                                            <option value={1}>Some option</option>
-                                            <option value={2}>Another option</option>
+                                            {
+                                                province.length > 0 && province.map(item => (
+                                                    <option value={item.id} key={item.id}>{item.name}</option>
+                                                ))
+                                            }
                                         </select>
                                     </div>
                                     <div className="search_btn">
-                                        <Link to="/tour"><button className="boxed-btn4 " type="submit">Search</button></Link>
+                                        <button className="boxed-btn4 " type="submit">Search</button>
                                     </div>
                                 </form>
                             </div>
@@ -89,10 +134,10 @@ function Home() {
                                 <div className="col-sm-6 col-md-12 fadeInRight" key={item.id}>
                                     <article className="product-big">
                                         <div className="unit flex-column flex-md-row align-items-md-stretch">
-                                            <div className="unit-left"><a className="product-big-figure" href="#"><img src={`${process.env.PUBLIC_URL}/asset/images/${item.image}`} alt="images" width={600} height={366} /></a></div>
+                                            <div className="unit-left"><Link className="product-big-figure" to={`/tourdetail/${item.id}`}><img src={`${process.env.PUBLIC_URL}/asset/images/${item.image}`} alt="images" width={600} height={366} /></Link></div>
                                             <div className="unit-body">
                                                 <div className="product-big-body">
-                                                    <h5 className="product-big-title"><a href="#">{item.name}</a></h5>
+                                                    <h5 className="product-big-title"><Link to={`/tourdetail/${item.id}`}>{item.name}</Link></h5>
                                                     <p className="product-big-text">{item.content}...</p>
                                                     <div className="product-big-price-wrap"><span className="product-big-price"><NumberFormat value={item.price} suffix="VND" thousandSeparator={true} thousandsGroupStyle="thousand" displayType="text" /></span></div>
                                                     <Link to={`/tourdetail/${item.id}`} className="button button-black-outline button-ujarak">Buy This Tour</Link>
@@ -104,24 +149,8 @@ function Home() {
                             )
                         }
                         {
-                            tours.lenghth <= 0 && <div className="alert alert-danger">Hiện không có tour nào</div>
+                            !tours && <div className="alert alert-danger">Hiện không có tour nào</div>
                         }
-                        {/* <div className="col-sm-6 col-md-12 fadeInLeft">
-                            <article className="product-big">
-                                <div className="unit flex-column flex-md-row align-items-md-stretch">
-                                    <div className="unit-left"><a className="product-big-figure" href="#"><img src={image_coco} alt="images" width={600} height={366} /></a></div>
-                                    <div className="unit-body">
-                                        <div className="product-big-body">
-                                            <h5 className="product-big-title"><a href="#">Mauritius Island, Africa</a></h5>
-                                            <p className="product-big-text">The beautiful and inviting island nation of Mauritius is an ideal ‘flop and drop’ at the conclusion of your safari. Indulge in the delightful scents of the fragrant...</p>
-                                            <div className="product-big-price-wrap"><span className="product-big-price">9.000.000VND</span></div>
-                                            <a className="button button-black-outline button-ujarak" href="#">Buy This Tour</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div> */}
                     </div>
                 </div>
             </section>
@@ -143,14 +172,14 @@ function Home() {
                                         </figure>
                                         <div className="fh5co-text">
                                             <h2>{item.title.slice(0, 30)}..</h2>
-                                            <p>{item.content.slice(0,100)}...</p>
+                                            <p>{item.content.slice(0, 100)}...</p>
                                             <p><span className="btn btn-primary">Read More</span></p>
                                         </div>
                                     </Link>
                                 </div>
                             ))
                         }
-                        
+
                     </div>
                 </div>
             </div>

@@ -48,6 +48,9 @@
     line-height: 1.5em;
     font-weight: 500;
 }
+.order_item_info_title > *:hover{
+    color: #09C6AB;
+}
 .order_item_info_title *{
     color: black;
 }
@@ -86,7 +89,7 @@ td.order_items_row_total {
     background-color: #f6f6f6;
 }
 table td.order_items_row_total_amount.order_items_row_due {
-    color: #f7931e;
+    color: #09C6AB;
     font-size: 18px;
 }
 .table_order_items_details>tbody>tr:last-child .order_items_row_due {
@@ -109,7 +112,6 @@ table td.order_items_row_total_amount.order_items_row_due {
 
     padding: .75rem 1rem;
     background-color: #fff;
-    color: var(--text);
     border-width: 2px;
     border-style: solid;
     border-color: #e5e5e5;
@@ -119,7 +121,7 @@ table td.order_items_row_total_amount.order_items_row_due {
     outline: 0;
 }
 .checkout_form_input_field input:focus{
-    border-color: #dc834e;
+    border-color: #09C6AB;
 }
 .payment_group {
     margin-bottom: 10px;
@@ -137,7 +139,7 @@ table td.order_items_row_total_amount.order_items_row_due {
     color: #777;
 }
 .payment_method_title.tab_active {
-    color: #dc834e;
+    color: #09C6AB;
 }
 .checkout-wrapper .payment_method_title:not(:last-child) {
     margin-right: .5rem;
@@ -174,11 +176,11 @@ table td.order_items_row_total_amount.order_items_row_due {
     text-transform: capitalize;
     line-height: 20px;
     color: #fff;
-    background-color: #dc834e;
+    background-color: #dfdfdf;
     border-radius: 5px 5px 5px 5px;
     padding: 15px 30px;
 }
 .submit_group .button:hover{
     color: #fff;
-    background-color: #dfdfdf;
+    background-color: #09C6AB;
 }

@@ -10,12 +10,15 @@ import Slider from 'react-slick'
 import { useState, useRef } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
-import { Link, useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import Moment from 'react-moment'
+import NumberFormat from 'react-number-format';
+import { useDispatch } from 'react-redux'
+
 
 
 function TourDetail() {
-    //show ite
+    //show itel
     const onshow = (e) => {
         const collapse = document.querySelectorAll('.collapse');
         collapse.forEach(element => {
@@ -67,14 +70,13 @@ function TourDetail() {
         setNav1(slider1.current)
         setNav2(slider2.current)
     }, [])
-    //lay tour theo id
+    //lay tourPlace theo id tour
     const { id } = useParams();
-    // const [soNgay, setSoNgay] = useState(1);
     const [tourPlace, setTourPlace] = useState([]);
 
     useEffect(() => {
         axios
-            .get(`http://localhost:9090/tour/${id}`)
+            .get(`http://localhost:9090/tour/tourplace/${id}`)
             .then(res => {
                 setTourPlace(res.data)
             })
@@ -82,18 +84,49 @@ function TourDetail() {
                 console.log(err);
             })
     }, [id])
-
-
-    console.log(tourPlace);
     //
     let soNgay2 = [];
     for(let i = 1; i <= tourPlace.length; i++){
         soNgay2.push(i);
     }
+    //book
+    const [adult, setAdult] = useState(0);
+    const [child, setChild] = useState(0);
+    const [infa, setInfa] = useState(0);
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const dispatchTour = useDispatch();
 
+    useEffect(() => {
+        axios
+            .get(`http://localhost:9090/tour/${id}`)
+            .then(res => {
+                dispatchTour({
+                    type: "GET_TOUR",
+                    payload: res.data
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [id, dispatchTour])
+
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if((Number.parseInt(adult)+Number.parseInt(infa)+Number.parseInt(child)) > tourPlace[0].tour.max_amount){
+            alert("Ticket over");
+        }else{
+            dispatch({
+                type: "BOOK_AMOUNT",
+                payload: [adult, child, infa]
+            })
+            history.push(`/booking`)
+        }
+    }
+
+    
     return (
-
-
         <div className="fix-container" >
             <div className="row" style={{ margin: '50px', paddingTop: '20px' }}>
                 {
@@ -246,9 +279,10 @@ function TourDetail() {
                             <div className="border-bottom">
                                 <div className="p-4">
                                     <span style={{ fontSize: '14px' }}>Giá:</span>
-                                    <span className="title-price">3,500,000VND</span>
+                                    <span className="title-price"><NumberFormat value={tourPlace[0].tour.price} suffix="vnd" thousandSeparator={true} thousandsGroupStyle="thousand" displayType="text" /></span>
                                 </div>
                             </div>
+                            <form onSubmit={handleSubmit}>
                             <div className="p-4">
                                 {/* Input */}
                                 <span className="d-block text-gray-1 font-weight-normal mb-2 text-left">Adults : Age 18+</span>
@@ -256,7 +290,7 @@ function TourDetail() {
                                     <div className="border-bottom border-width-2 border-color-1 pb-1">
                                         <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
                                             <div className="flex-horizontal-center">
-                                                <input className=" form-control text-center" type="number" defaultValue={1} min={1} max={100} />
+                                                <input className=" form-control text-center" type="number" value={adult} onChange={(e) => setAdult(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
                                             </div>
                                         </div>
                                     </div>
@@ -268,7 +302,7 @@ function TourDetail() {
                                     <div className="border-bottom border-width-2 border-color-1 pb-1">
                                         <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
                                             <div className="flex-horizontal-center">
-                                                <input className=" form-control text-center" type="number" defaultValue={1} min={1} max={100} />
+                                                <input className=" form-control text-center" type="number" value={child} onChange={(e) => setChild(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
                                             </div>
                                         </div>
                                     </div>
@@ -280,16 +314,17 @@ function TourDetail() {
                                     <div className="border-bottom border-width-2 border-color-1 pb-1">
                                         <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
                                             <div className="flex-horizontal-center">
-                                                <input className=" form-control text-center" type="number" defaultValue={1} min={1} max={100} />
+                                                <input className=" form-control text-center" type="number" value={infa} onChange={(e) => setInfa(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 {/* End Input */}
                                 <div className="text-center">
-                                    <Link to="/booking" className="btn btn-info d-flex align-items-center justify-content-center  height-60 w-100 mb-xl-0 mb-lg-1 transition-3d-hover font-weight-bold">Book Now</Link>
+                                    <input type="submit" value="Book Now" className="btn btn-info d-flex align-items-center justify-content-center  height-60 w-100 mb-xl-0 mb-lg-1 transition-3d-hover font-weight-bold"/>
                                 </div>
                             </div>
+                            </form>
                         </div>
                         }
                         <div className="border border-color-7 rounded p-4 mb-5">

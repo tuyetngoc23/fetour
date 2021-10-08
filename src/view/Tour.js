@@ -5,9 +5,10 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format';
 import '../style/tour.css'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios';
 import Moment from 'react-moment';
+import { useHistory } from 'react-router';
 
 function Tour() {
     const [number1, setNumber1] = useState(1000000);
@@ -78,20 +79,44 @@ function Tour() {
             })
     }, [])
     //get List Tours
+    const search = useLocation().search;
     const [tours, setTours] = useState([]);
-
+    const [departure, setDeparture] = useState();
+    const [date, setDate] = useState(new URLSearchParams(search).get("date"));
+    const [cattour, setCattour] = useState(new URLSearchParams(search).get("cattour"));
+    const [prov, setProv] = useState(new URLSearchParams(search).get("prov"));
+    const [ks, setKs] = useState();
+    const [phuongtien, setPhuongTien] = useState();
+    
+    
     useEffect(() => {
         axios
-            .get(`http://localhost:9090/tour`)
+            .get(`http://localhost:9090/tour`, {
+                params: {
+                    date: date,
+                    cattour :cattour,
+                    prov: prov,
+                    departure: departure,
+                    ks: ks,
+                    phuongtien: phuongtien,
+                    timgiatu: number1,
+                    timgiaden: number2,
+                }
+            })
             .then(res => {
                 setTours(res.data)
             })
             .catch(err => {
                 console.log(err);
             })
-    }, [])
+    }, [date, cattour, prov, departure, ks, phuongtien, number1, number2])
 
-    console.log(tours);
+    const history = useHistory();
+    const submit=(e) => {
+        e.preventDefault();
+        history.push("/tour")
+    }
+  
 
     return (
         <div>
@@ -102,46 +127,47 @@ function Tour() {
                     </div>
                     <div className="row">
                         <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 mg-bot30">
-                            <form action="#">
+                            <form onSubmit={submit}>
                                 <div className="searchbar">
                                     <div className="titlesearch">TÌM KIẾM</div>
                                     <div className="frsearch" style={{ clear: 'both' }}>
                                         <div className="location mg-bot15">
                                             <label htmlFor="departure">Nơi Khởi Hành</label>
-                                            <select id="departure" className="form-control" name="departure">
+                                            <select id="departure" className="form-control" 
+                                                onChange={(e) => setDeparture(e.target.value)}>
                                                 <option value={0}>--Chọn nơi khởi hành--</option>
                                                 {
                                                     department.length > 0 && department.map(item => (
-                                                        <option value={item.id}>{item.address}</option>
+                                                        <option value={item.id} key={item.id}>{item.address}</option>
                                                     ))
                                                 }
                                             </select>
                                         </div>
                                         <div className="cat mg-bot15">
                                             <label htmlFor="cattour">Loại Tour</label>
-                                            <select id="cattour" className="form-control" name="cat">
+                                            <select id="cattour" className="form-control" onChange={(e) => setCattour(e.target.value)}>
                                                 <option value={0}>--Chọn loại tour--</option>
                                                 {
                                                     cat.length > 0 && cat.map(item =>(
-                                                        <option value={item.id}>{item.name}</option>
+                                                        <option value={item.id} key={item.id}>{item.name}</option>
                                                     ))
                                                 }
                                             </select>
                                         </div>
                                         <div className="province mg-bot15">
                                             <label htmlFor="desnitation">Nơi đến</label>
-                                            <select id="desnitation" className="form-control" name="desnitation">
+                                            <select id="desnitation" className="form-control" onChange={(e) => setProv(e.target.value)}>
                                                 <option value={0}>--Chọn nơi đến--</option>
                                                 {
                                                     province.length > 0 && province.map(item =>(
-                                                        <option value={item.id}>{item.name}</option>
+                                                        <option value={item.id} key={item.id}>{item.name}</option>
                                                     ))
                                                 }
                                             </select>
                                         </div>
                                         <div className="arival mg-bot15">
                                             <label htmlFor="ngaykhoihanh">Ngày Khởi Hành</label>
-                                            <input id="ngaykhoihanh" className="form-control" type="date" name="ngaykhoihanh"/>
+                                            <input id="ngaykhoihanh" className="form-control" type="date" onChange={(e) => setDate(e.target.value)}/>
                                         </div>
                                         <div className="price mg-bot15">
                                             <label htmlFor="gia">Giá</label>
@@ -154,31 +180,31 @@ function Tour() {
                                         </div>
                                         <div className="hotel mg-bot15">
                                             <label htmlFor="ks">Khách Sạn</label>
-                                            <select id="ks" className="form-control" name="ks">
+                                            <select id="ks" className="form-control" onChange={(e) => setKs(e.target.value)}>
                                                 <option value={0}>--Chọn Khách sạn--</option>
                                                 {
                                                     hotel.length > 0 && hotel.map(item =>(
-                                                        <option value={item.id}>{item.type}</option>
+                                                        <option value={item.id} key={item.id}>{item.type}</option>
                                                     ))
                                                 }
                                             </select>
                                         </div>
                                         <div className="vehicle mg-bot15">
                                             <label htmlFor="phuongtien">Phương Tiện</label>
-                                            <select id="phuongtien" className="form-control" name="vehicle">
+                                            <select id="phuongtien" className="form-control" onChange={(e) => setPhuongTien(e.target.value)}>
                                                 <option value={0}>--Chọn phương tiện--</option>
                                                 {
                                                     vehicle.length > 0 && vehicle.map(item =>(
-                                                        <option value={item.id}>{item.ten}</option>
+                                                        <option value={item.id} key={item.id}>{item.ten}</option>
                                                     ))
                                                 }
                                             </select>
                                         </div>
-                                        <div className="btsearch mg-bot15">
+                                        {/* <div className="btsearch mg-bot15">
                                             <div>
                                                 <input id="search" type="submit" className="form-control" defaultValue="Tìm Kiếm" />
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </form>

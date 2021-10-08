@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom'
 function Header() {
     return (
         <>
-
             <header>
                 <div style={{ opacity: '0.5' }} className="fixed-top">
                     <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">

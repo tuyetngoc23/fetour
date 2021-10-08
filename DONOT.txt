@@ -1,0 +1,3 @@
+**Booking.js
+- xử lý ràng buộc khi load lại trang: rỗng, ...
+- tối ưu code trong việc nhấn tab content
