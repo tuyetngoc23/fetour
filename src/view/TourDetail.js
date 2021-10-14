@@ -115,13 +115,22 @@ function TourDetail() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if((Number.parseInt(adult)+Number.parseInt(infa)+Number.parseInt(child)) > tourPlace[0].tour.max_amount){
-            alert("Ticket over");
+            alert("Số vé vượt mức cho phép");
         }else{
-            dispatch({
-                type: "BOOK_AMOUNT",
-                payload: [adult, child, infa]
-            })
-            history.push(`/booking`)
+            if(adult === 0 & (child !== 0 || infa !== 0)){
+                alert("Trẻ nhỏ và trẻ em cần có người lớn đi cùng")
+            }else{
+                if(adult === 0 & child === 0 & infa === 0){
+                    alert("Vui lòng chọn ít nhất một vé")
+                }else{
+                    dispatch({
+                        type: "BOOK_AMOUNT",
+                        payload: [adult, child, infa]
+                    })
+                    history.push(`/booking`)
+                }
+            }
+            
         }
     }
 

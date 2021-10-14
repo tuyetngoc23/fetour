@@ -85,18 +85,6 @@ function OrderDetail() {
                         <div className="order-service">
                         </div>
                         <div className="order-total-subtotal">
-                            {/* <div className="order_items_total">
-                                <span className="label">Sub Total</span>
-                                <span className="amount"> <span className="currency_amount" data-amount={100}><span className="currency_symbol">$</span>100</span></span>
-                            </div>
-                            <div className="order_items_total">
-                                <span className="label">Total</span>
-                                <span className="amount"><span className="currency_amount" data-amount={100}><span className="currency_symbol">$</span>100</span></span>
-                            </div>
-                            <div className="order_items_total">
-                                <span className="label">Amount Paid</span>
-                                <span className="amount"><span className="currency_amount" data-amount={0}><span className="currency_symbol">$</span>0</span></span>
-                            </div> */}
                             <div className="order_items_total">
                                 <span className="label">Tổng Tiền : <NumberFormat value={tongTien} suffix="VNĐ" thousandSeparator={true} thousandsGroupStyle="thousand" displayType="text" style={{fontSize: '18px', color: '#09C6AB'}}/></span>
                                 
