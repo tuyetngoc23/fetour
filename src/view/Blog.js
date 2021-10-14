@@ -58,7 +58,7 @@ function Blog() {
                                         <div className="popular-post-list">
                                             {
                                                 blogs.length > 0 && blogs.slice(-4).map(item => (
-                                                    <div className="single-post-list">
+                                                    <div className="single-post-list" key={item.id}>
                                                         <div className="thumb">
                                                             <img className="card-img rounded-0" src={`${process.env.PUBLIC_URL}/asset/images/${item.image}`} alt="image blog" />
                                                             <ul className="thumb-info">

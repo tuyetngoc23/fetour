@@ -62,13 +62,13 @@ function TourDetail() {
         }]
     };
     const [nav1, setNav1] = useState(null)
-    const [nav2, setNav2] = useState(null)
+    // const [nav2, setNav2] = useState(null)
     const slider1 = useRef(null);
     const slider2 = useRef(null);
 
     React.useEffect(() => {
         setNav1(slider1.current)
-        setNav2(slider2.current)
+        // setNav2(slider2.current)
     }, [])
     //lay tourPlace theo id tour
     const { id } = useParams();

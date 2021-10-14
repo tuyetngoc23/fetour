@@ -13,6 +13,7 @@ import Moment from 'react-moment'
 
 function BlogDetail() {
     const { id } = useParams();
+    const [mess, setMess] = useState("")
     //getBlog
     const [blog, setBlog] = useState();
     useEffect(() => {
@@ -25,13 +26,11 @@ function BlogDetail() {
                 console.log(err);
             })
     }, [id])
-    console.log(blog)
-    //lay ds comment
     
+    //lay ds comment
     const [comment, setComment] = useState([]);
-
-    useEffect(() => {
-        axios
+    let dsComment = async () => {
+        await axios
             .get(`http://localhost:9090/blog/comment/${id}`)
             .then(res => {
                 setComment(res.data)
@@ -39,7 +38,10 @@ function BlogDetail() {
             .catch(err => {
                 console.log(err);
             })
-    }, [id])
+    }
+    useEffect(() => {
+        dsComment();
+    },)
     
     
     //get List Blog
@@ -56,12 +58,37 @@ function BlogDetail() {
             })
     }, [])
 
-    console.log(blogs);
-
+    //post cmt
+    
+    
+    const handlSubmit = (e) =>{
+        e.preventDefault();
+        if(mess === null || mess.trim() === ""){
+            alert("Vui lòng nhập bình luận")
+        }else{
+            let saveComment= async () =>{
+                const formData = new FormData();
+                formData.append("content", mess)
+                formData.append("usertour.id", 2)
+                formData.append("blog.id",  id)
+                formData.append("date", new Date())
+    
+                await axios.post(`http://localhost:9090/comment/add`, formData, {
+                    headers: {
+                        "Content-Type" : "multipart/form-data"
+                    }
+                });
+            }
+            saveComment();
+            setMess("");
+            alert("Đăng thành công");
+            dsComment();
+        }
+    }
     return (
 
         <>
-            <h1 className="title-blog">Blog Detail</h1>
+            <h1 className="title-blog">Blog</h1>
             <section className="blog-post-area section-margin">
                 <div className="container">
                     <div className="row">
@@ -124,11 +151,11 @@ function BlogDetail() {
                                 </div>
                                 <div className="comment-form">
                                     <h4>Leave a Reply</h4>
-                                    <form action="#">
+                                    <form onSubmit={handlSubmit}>
                                         <div className="form-group">
-                                            <textarea className="form-control mb-10" rows={5} name="message" placeholder="Messege" required />
+                                            <textarea className="form-control mb-10" rows={5} name="message" value={mess} onChange={(e) => setMess(e.target.value)} placeholder="Messege" required />
                                         </div>
-                                        <input type="submit" className="button submit_btn" value="Post Comment" />
+                                        <input type="submit" className="button submit_btn" value="Đăng" />
                                     </form>
                                 </div>
                             </div>

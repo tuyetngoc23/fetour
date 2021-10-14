@@ -64,7 +64,7 @@ function PayPal() {
                 console.log(err);
             }
        }).render(paypal.current)
-    }, [])
+    },[])
 
     return (
         <>
