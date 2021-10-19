@@ -1,5 +1,4 @@
 import axios from 'axios';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import ReactModalLogin from "react-modal-login";
 import { useHistory } from 'react-router';
@@ -67,30 +66,23 @@ function Login() {
     var birth = document.getElementById("birthday").value;
     var username = document.getElementById("username").value;
     var avatar = document.getElementById("avatar").files[0];
-    const avatar2 = document.querySelector("#avatar").files[0];
-    const reader = new FileReader();
-    var tmppath = URL.createObjectURL(avatar2);
-    
-    // tmppath = tmppath.replace("http://localhost:3000","http://localhost:3000/asset/images");
-    console.log(tmppath);
-    console.log(avatar);
-    console.log(avatar2);
+    var cusname = document.getElementById("cusname").value;
+    var email = document.getElementById("email").value;
+    var phone = document.getElementById("phone").value;
+   
     let co = true;
     let saveUser = async () => {
-      // avatar2 = avatar2.replace("C:\\Users\\Windows 10\\AppData\\Local\\Temp\\tomcat.9090.5649094795828257947\\work\\Tomcat-1\\localhost\\ROOT\\", "D:\\HK9\\DAN\\fetour\\public\\asset\\images")
       const formData = new FormData();
       formData.append("username", username)
       formData.append("passwd", document.getElementById("password").value)
-      formData.append("cusname", document.getElementById("cusname").value)
-      formData.append("phone", document.getElementById("phone").value)
+      formData.append("cusname", cusname)
+      formData.append("phone", phone)
       formData.append("birthday", new Date(birth))
       formData.append("address", document.getElementById("address").value)
-      formData.append("email", document.getElementById("email").value)
-      // if (avatar2 === null || avatar2 === "") {
+      formData.append("email", email)
+      if (avatar === null || avatar === "") {
         formData.append("avatar", "avatar-meo.jpg")
-      // } else {
-        // formData.append("avatar", avatar2)//xu lys luu anh
-      // }
+      }
       formData.append("state", 1)
       formData.append("user_role.id", 2)
       formData.append("file", avatar)
@@ -98,10 +90,7 @@ function Login() {
       await axios.post(`http://localhost:9090/user/add`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
-        },
-        // params: {
-        //   file: avatar
-        // }
+        }
       });
     }
     if (userTour.length > 0) {
@@ -113,8 +102,9 @@ function Login() {
     }
     if (document.getElementById("password").value === document.getElementById("confirm").value &
       username.value !== null & username !== "" & co === true
-      & document.getElementById("password").value !== null & document.getElementById("password").value !== "") {
-
+      & document.getElementById("password").value !== null & document.getElementById("password").value !== ""
+      & birth != null & birth !== "" & cusname != null & cusname !== "" & email != null & email !== "" &
+      phone > 1000000000 & phone < 10000000000 & avatar != null) {
       saveUser();
       setError(null)
       console.log("regist success");
@@ -129,28 +119,34 @@ function Login() {
     let login = async () => {
       await axios.get(`http://localhost:9090/user/login`, {
         params: {
-          username: document.getElementById("username").value
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value
         }
       }).then(res => {
         console.log(res.data.username);
-        setError(null)
-        axios.get(`http://localhost:9090/user`, {
-          params: {
-            username: res.data.username
-          }
-        }).then(res2 => {
-          console.log(res2.data);
+        if(res.status === 500){
+          setError("Invalid")
+        }else{
           setError(null)
-        })
-      })
-        .catch(err => {
-
+          axios.get(`http://localhost:9090/user`, {
+            params: {
+              username: res.data.username
+            }
+          }).then(res2 => {
+            console.log(res2.data);
+            setError(null)
+          })
+        }
+      }).catch(err => {
           // alert("Login fail")
           setError(err);
         })
     }
-    login();
-    console.log("login success");
+    if(document.getElementById("username").value != null & document.getElementById("username").value !== ""){
+      console.log("login success");
+      login();
+      setError(null)
+    }
   }
 
 

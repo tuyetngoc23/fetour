@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react'
-import { useState, useEffect, useContext} from 'react'
+import { useState, useEffect} from 'react'
 import '../style/home.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -183,6 +183,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <img src={`${process.env.PUBLIC_URL}/asset/images/66782620_385720765415196_5868615361607237632_n.jpg`} alt="Image" className="img-responsive" />
         </>
 
     )
