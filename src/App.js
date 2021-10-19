@@ -10,6 +10,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Booking from './view/Booking';
 import OrderDetail from './view/OrderDetail';
 import Contact from './view/Contact';
+import Login from './view/Login';
 // import "swiper/css/bundle";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/booking" component={Booking}></Route>
           <Route  path="/orderdetail" component={OrderDetail}></Route>
           <Route  path="/contact" component={Contact}></Route>
+          <Route  path="/login" component={Login}></Route>
         </Switch>
         <Footer />
       </BrowserRouter>

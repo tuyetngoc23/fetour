@@ -41,7 +41,7 @@ function BlogDetail() {
     }
     useEffect(() => {
         dsComment();
-    },)
+    },[])
     
     
     //get List Blog

@@ -13,6 +13,7 @@
     "react": "^17.0.2",
     "react-axios": "^2.0.5",
     "react-dom": "^17.0.2",
+    "react-modal-login": "^1.4.5",
     "react-moment": "^1.1.1",
     "react-number-format": "^4.7.3",
     "react-redux": "^7.2.5",
@@ -25,6 +26,7 @@
     "swiper": "^7.0.1",
     "web-vitals": "^1.0.1"
   },
+  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
