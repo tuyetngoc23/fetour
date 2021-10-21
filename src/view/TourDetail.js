@@ -13,11 +13,13 @@ import axios from 'axios'
 import { useParams, useHistory } from 'react-router-dom'
 import Moment from 'react-moment'
 import NumberFormat from 'react-number-format';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import Rating from 'react-rating'
 
 
 
 function TourDetail() {
+    const user = useSelector(state => state.user.user)
     //show itel
     const onshow = (e) => {
         const collapse = document.querySelectorAll('.collapse');
@@ -86,7 +88,7 @@ function TourDetail() {
     }, [id])
     //
     let soNgay2 = [];
-    for(let i = 1; i <= tourPlace.length; i++){
+    for (let i = 1; i <= tourPlace.length; i++) {
         soNgay2.push(i);
     }
     //book
@@ -111,18 +113,18 @@ function TourDetail() {
             })
     }, [id, dispatchTour])
 
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        if((Number.parseInt(adult)+Number.parseInt(infa)+Number.parseInt(child)) > tourPlace[0].tour.max_amount){
+        if ((Number.parseInt(adult) + Number.parseInt(infa) + Number.parseInt(child)) > tourPlace[0].tour.max_amount) {
             alert("Số vé vượt mức cho phép");
-        }else{
-            if(adult === 0 & (child !== 0 || infa !== 0)){
+        } else {
+            if (adult === 0 & (child !== 0 || infa !== 0)) {
                 alert("Trẻ nhỏ và trẻ em cần có người lớn đi cùng")
-            }else{
-                if(adult === 0 & child === 0 & infa === 0){
+            } else {
+                if (adult === 0 & child === 0 & infa === 0) {
                     alert("Vui lòng chọn ít nhất một vé")
-                }else{
+                } else {
                     dispatch({
                         type: "BOOK_AMOUNT",
                         payload: [adult, child, infa]
@@ -130,11 +132,48 @@ function TourDetail() {
                     history.push(`/booking`)
                 }
             }
-            
+
         }
     }
+    //evaluate
+    const [rate, setRate] = useState(0)
+    const [isEva, setIsEva] = useState(true)
+    const [content, setContent] = useState("")
+    useEffect(() => {
+        if (user != null) {
+            axios.get(`http://localhost:9090/evaluate`, {
+                params: {
+                    userId: user.id,
+                    tourId: id
+                }
+            }).then(res => {
+                setRate(res.data.rate)
+                setContent(res.data.content)
+                setIsEva(true);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    }, [user, id])
 
-    
+    const saveEvaluate = async (r) => {
+        const form = new FormData();
+        form.append("user.id", user.id);
+        form.append("content", content);
+        form.append("wdate", new Date());
+        form.append("tour.id", id);
+        console.log(r);
+        if(r.type === 'click'){
+            form.append("rate", Number.parseFloat(rate));
+            alert("Đánh giá thành công")
+        }else{
+            form.append("rate", Number.parseFloat(r));
+        }
+        await axios.post(`http://localhost:9090/evaluate/add`, form);
+        console.log("save Evaluate");
+        setIsEva(false);
+    }
+
     return (
         <div className="fix-container" >
             <div className="row" style={{ margin: '50px', paddingTop: '20px' }}>
@@ -174,7 +213,31 @@ function TourDetail() {
                                     <i className=" text-primary mr-2 fas fa-plane" />
                                     <div className="ml-1 text-gray-1">Pickup: {tourPlace[0].tour.vehicle.ten}</div>
                                 </li>
+                                {
+                                    user !== null ?
+                                        <li className="col-md-4 flex-horizontal-center list-group-item text-lh-sm mb-2">
+                                            <div className="ml-1 text-gray-1">
+                                                <Rating
+                                                    emptySymbol="far fa-star fa-2x"
+                                                    fullSymbol="fas fa-star fa-2x"
+                                                    fractions={2}
+                                                    initialRating={rate}
+                                                    onClick={saveEvaluate}
+                                                />
+                                            </div>
+                                        </li> : ""
+                                }
                             </ul>
+                            <ul className="mb-4 list-group list-group-borderless list-group-horizontal row">
+                                {
+                                user != null & isEva?
+                                <li className="col-md-4 flex-horizontal-center list-group-item text-lh-sm mb-2" style={{display: 'f'}}>
+                                    <textarea rows={2} placeholder="Đánh giá" defaultValue={content} onChange={(e) => setContent(e.target.value)}></textarea>
+                                    <button className="btn btn-info" style={{marginLeft: '5px'}} onClick={saveEvaluate}>Gửi</button>
+                                </li> : ""
+                                }
+                            </ul>
+
                             <div className="position-relative">
                                 {/* Images Carousel */}
                                 <div>
@@ -285,56 +348,56 @@ function TourDetail() {
                         {
                             tourPlace.length > 0 &&
                             <div className="border border-color-7 rounded mb-5">
-                            <div className="border-bottom">
-                                <div className="p-4">
-                                    <span style={{ fontSize: '14px' }}>Giá:</span>
-                                    <span className="title-price"><NumberFormat value={tourPlace[0].tour.price} suffix="vnd" thousandSeparator={true} thousandsGroupStyle="thousand" displayType="text" /></span>
+                                <div className="border-bottom">
+                                    <div className="p-4">
+                                        <span style={{ fontSize: '14px' }}>Giá:</span>
+                                        <span className="title-price"><NumberFormat value={tourPlace[0].tour.price} suffix="vnd" thousandSeparator={true} thousandsGroupStyle="thousand" displayType="text" /></span>
+                                    </div>
                                 </div>
+                                <form onSubmit={handleSubmit}>
+                                    <div className="p-4">
+                                        {/* Input */}
+                                        <span className="d-block text-gray-1 font-weight-normal mb-2 text-left">Adults : Age 18+</span>
+                                        <div className="mb-4">
+                                            <div className="border-bottom border-width-2 border-color-1 pb-1">
+                                                <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
+                                                    <div className="flex-horizontal-center">
+                                                        <input className=" form-control text-center" type="number" value={adult} onChange={(e) => setAdult(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* End Input */}
+                                        {/* Input */}
+                                        <span className="d-block text-gray-1 font-weight-normal mb-2 text-left">Children: Age 6-17</span>
+                                        <div className="mb-4">
+                                            <div className="border-bottom border-width-2 border-color-1 pb-1">
+                                                <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
+                                                    <div className="flex-horizontal-center">
+                                                        <input className=" form-control text-center" type="number" value={child} onChange={(e) => setChild(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* End Input */}
+                                        {/* Input */}
+                                        <span className="d-block text-gray-1 font-weight-normal mb-2 text-left">Infant: Age 0-5</span>
+                                        <div className="mb-4">
+                                            <div className="border-bottom border-width-2 border-color-1 pb-1">
+                                                <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
+                                                    <div className="flex-horizontal-center">
+                                                        <input className=" form-control text-center" type="number" value={infa} onChange={(e) => setInfa(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* End Input */}
+                                        <div className="text-center">
+                                            <input type="submit" value="Book Now" className="btn btn-info d-flex align-items-center justify-content-center  height-60 w-100 mb-xl-0 mb-lg-1 transition-3d-hover font-weight-bold" />
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <form onSubmit={handleSubmit}>
-                            <div className="p-4">
-                                {/* Input */}
-                                <span className="d-block text-gray-1 font-weight-normal mb-2 text-left">Adults : Age 18+</span>
-                                <div className="mb-4">
-                                    <div className="border-bottom border-width-2 border-color-1 pb-1">
-                                        <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
-                                            <div className="flex-horizontal-center">
-                                                <input className=" form-control text-center" type="number" value={adult} onChange={(e) => setAdult(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* End Input */}
-                                {/* Input */}
-                                <span className="d-block text-gray-1 font-weight-normal mb-2 text-left">Children: Age 6-17</span>
-                                <div className="mb-4">
-                                    <div className="border-bottom border-width-2 border-color-1 pb-1">
-                                        <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
-                                            <div className="flex-horizontal-center">
-                                                <input className=" form-control text-center" type="number" value={child} onChange={(e) => setChild(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* End Input */}
-                                {/* Input */}
-                                <span className="d-block text-gray-1 font-weight-normal mb-2 text-left">Infant: Age 0-5</span>
-                                <div className="mb-4">
-                                    <div className="border-bottom border-width-2 border-color-1 pb-1">
-                                        <div className="js-quantity flex-center-between mb-1 text-dark font-weight-bold">
-                                            <div className="flex-horizontal-center">
-                                                <input className=" form-control text-center" type="number" value={infa} onChange={(e) => setInfa(e.target.value)} min={0} max={tourPlace[0].tour.min_amount} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* End Input */}
-                                <div className="text-center">
-                                    <input type="submit" value="Book Now" className="btn btn-info d-flex align-items-center justify-content-center  height-60 w-100 mb-xl-0 mb-lg-1 transition-3d-hover font-weight-bold"/>
-                                </div>
-                            </div>
-                            </form>
-                        </div>
                         }
                         <div className="border border-color-7 rounded p-4 mb-5">
                             <h6 className="font-size-17 font-weight-bold text-gray-3 mx-1 mb-3 pb-1">Why Book With Us?</h6>

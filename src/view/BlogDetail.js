@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
 import Moment from 'react-moment'
+import { useSelector } from 'react-redux'
 // import Pagination from 'react-js-pagination'
 
 
@@ -14,6 +15,7 @@ import Moment from 'react-moment'
 function BlogDetail() {
     const { id } = useParams();
     const [mess, setMess] = useState("")
+    const user = useSelector(state => state.user.user)
     //getBlog
     const [blog, setBlog] = useState();
     useEffect(() => {
@@ -40,8 +42,15 @@ function BlogDetail() {
             })
     }
     useEffect(() => {
-        dsComment();
-    },[])
+        axios
+            .get(`http://localhost:9090/blog/comment/${id}`)
+            .then(res => {
+                setComment(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    },[id])
     
     
     //get List Blog
@@ -66,23 +75,27 @@ function BlogDetail() {
         if(mess === null || mess.trim() === ""){
             alert("Vui lòng nhập bình luận")
         }else{
-            let saveComment= async () =>{
-                const formData = new FormData();
-                formData.append("content", mess)
-                formData.append("usertour.id", 2)
-                formData.append("blog.id",  id)
-                formData.append("date", new Date())
-    
-                await axios.post(`http://localhost:9090/comment/add`, formData, {
-                    headers: {
-                        "Content-Type" : "multipart/form-data"
-                    }
-                });
+            if(user !== null){
+                let saveComment= async () =>{
+                    const formData = new FormData();
+                    formData.append("content", mess)
+                    formData.append("usertour.id", user.id)
+                    formData.append("blog.id",  id)
+                    formData.append("date", new Date())
+        
+                    await axios.post(`http://localhost:9090/comment/add`, formData, {
+                        headers: {
+                            "Content-Type" : "multipart/form-data"
+                        }
+                    });
+                }
+                saveComment();
+                setMess("");
+                alert("Đăng thành công");
+                dsComment();
+            }else{
+                alert("Vui lòng đăng nhập")
             }
-            saveComment();
-            setMess("");
-            alert("Đăng thành công");
-            dsComment();
         }
     }
     return (

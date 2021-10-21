@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import Moment from 'react-moment'
 import NumberFormat from 'react-number-format'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,6 +13,7 @@ function Booking() {
     const [checkout, setCheckout] = useState(false)
     const amount = useSelector(state => state.book.amount)
     const tour = useSelector(state => state.tour.tour)
+    const user = useSelector(state => state.user.user)
     const giaNgLon = Number.parseFloat(amount[0])*Number.parseFloat(tour.price);
     const giaTreEm = Number.parseFloat(amount[1])*(Number.parseFloat(tour.price)/2);
     const giaEmBe = Number.parseFloat(amount[2])*(Number.parseFloat(tour.price)/4);
@@ -61,6 +62,7 @@ function Booking() {
 
     const history = useHistory();
     const dispatch = useDispatch()
+
 
     const formValid = () =>{
         const cusNameErr ={};
@@ -130,7 +132,9 @@ function Booking() {
                 formData.append("cus_name", cusName)
                 formData.append("email", email)
                 formData.append("phone",  sdt)
-                formData.append("usertour.id", 2)
+                if(user !== null){
+                    formData.append("usertour.id", Number.parseInt(user.id))
+                }
                 formData.append("tour.id",  tour.id)
                 formData.append("date", new Date())
                 formData.append("payment_type", "payment later")

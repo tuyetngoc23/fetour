@@ -5,20 +5,23 @@ import image_logo from '../asset/images/logo1.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import ReactModalLogin from 'react-modal-login';
-import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+
 
 function Header() {
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const history = useHistory()
+    const [user, setUser] = useState(null);
+    const [userTour, setUserTour] = useState({})
+    const dispatch = useDispatch()
+
     const openModal = () => {
         setShowModal(true);
     }
     const closeModal = () => {
         setShowModal(false)
         setError(null)
-        history.push("/")
     }
     const onLoginSuccess = (method, response) => {
         console.log("logged successfully with " + method);
@@ -56,7 +59,7 @@ function Header() {
         scope: "profile email"
     };
 
-    const [userTour, setUserTour] = useState({})
+   
     useEffect(() => {
         axios.get(`http://localhost:9090/user/list`)
             .then(res => {
@@ -130,6 +133,11 @@ function Header() {
                 console.log(res.data.username);
                 if (res.status === 500) {
                     setError("Invalid")
+                    dispatch({
+                        type: "GET_USER",
+                        payload: null
+                    })
+                    setUser(null)
                 } else {
                     setError(null)
                     axios.get(`http://localhost:9090/user`, {
@@ -138,6 +146,18 @@ function Header() {
                         }
                     }).then(res2 => {
                         console.log(res2.data);
+                        setUser(res2.data)
+                        dispatch({
+                            type: "GET_USER",
+                            payload: {
+                                id : res2.data.id,
+                                username: res2.data.username,
+                                avatar: res2.data.avatar,
+                                cusname: res2.data.cusname,
+                                email: res2.data.email,
+                                phone: res2.data.phone
+                            }
+                        })
                         setError(null)
                     })
                 }
@@ -149,8 +169,17 @@ function Header() {
         if (document.getElementById("username").value != null & document.getElementById("username").value !== "") {
             console.log("login success");
             login();
-            setError(null)
+            setError(null);
+            closeModal();
         }
+    }
+
+    const onLogout = () => {
+        dispatch({
+            type: "GET_USER",
+            payload: null
+        })
+        setUser(null)
     }
 
     return (
@@ -173,9 +202,15 @@ function Header() {
                         <li className="nav-item" role="presentation">
                             <button className="nav-link" id="pills-child-tab" ><Link to="/contact">Contact</Link></button>
                         </li>
-                        <li className="nav-item" role="presentation">
-                            <button className="nav-link" id="pills-child-tab" onClick={openModal}>Login</button>
-                        </li>
+                        {
+                            user === null ?
+                            <li className="nav-item" role="presentation">
+                             <button className="nav-link" id="pills-child-tab" onClick={openModal}>Login</button>
+                            </li>
+                            : <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-child-tab" onClick={onLogout}><span>{user.username}</span>/Logout</button>
+                            </li>
+                        }
                     </ul>
                     <ul>
                     
