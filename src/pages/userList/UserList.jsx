@@ -1,19 +1,66 @@
 import "./userList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+// import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function UserList() {
-  const [data, setData] = useState(userRows);
+  const [users, setUsers] = useState([])
+  const [isNot, setIsNot] = useState(true)
+  // const dsUser = async () => {
+  //   await axios
+  //     .get(`http://localhost:9090/user/list`)
+  //     .then(res => {
+  //       setUsers(res.data)
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }
+  useEffect(() => {
+    axios
+      .get(`http://localhost:9090/user/list`)
+      .then(res => {
+        setUsers(res.data)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [])
+  // console.log(users);
+
+  const notUser2 = users.filter(item => item.state === false);
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    notUser2.map((item) => {
+      if(item.id === id){
+        setIsNot(false);
+        alert("Đã xóa")
+      }
+    })
+    if(isNot){
+      axios.post(`http://localhost:9090/user/delete/${id}`)
+    .then(res => {
+      console.log("delete success");
+      axios
+      .get(`http://localhost:9090/user/list`)
+      .then(res => {
+        setUsers(res.data)
+        setIsNot(true)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   };
-  
+
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ID", width: 100 },
     {
       field: "user",
       headerName: "User",
@@ -21,22 +68,25 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} alt="" />
+            <img className="userListImg" src={`${process.env.PUBLIC_URL}/asset/images/${params.row.avatar}`} alt="avatar" />
             {params.row.username}
           </div>
         );
       },
     },
     { field: "email", headerName: "Email", width: 200 },
+    { field: "phone", headerName: "Phone", width: 200 },
     {
-      field: "status",
+      field: "state",
       headerName: "Status",
       width: 120,
-    },
-    {
-      field: "transaction",
-      headerName: "Transaction Volume",
-      width: 160,
+      renderCell: (param) => {
+        if (param.row.state === true) {
+          return "active"
+        }else{
+          return "passive"
+        }
+      }
     },
     {
       field: "action",
@@ -45,9 +95,9 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
+            {/* <Link to={"/user/" + params.row.id}>
               <button className="userListEdit">Edit</button>
-            </Link>
+            </Link> */}
             <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}
@@ -61,7 +111,7 @@ export default function UserList() {
   return (
     <div className="userList">
       <DataGrid
-        rows={data}
+        rows={users}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}

@@ -39,7 +39,7 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Quick Menu</h3>
+          <h3 className="sidebarTitle">Menu</h3>
           <ul className="sidebarList">
             <Link to="/users" className="link">
               <li className="sidebarListItem">
@@ -47,10 +47,40 @@ export default function Sidebar() {
                 Users
               </li>
             </Link>
-            <Link to="/products" className="link">
+            <Link to="/tours" className="link">
               <li className="sidebarListItem">
                 <Storefront className="sidebarIcon" />
-                Products
+                Tours
+              </li>
+            </Link>
+            <Link to="/blogs" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Blogs
+              </li>
+            </Link>
+            <Link to="/cattours" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Loại Tour
+              </li>
+            </Link>
+            <Link to="/hotels" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Hotels
+              </li>
+            </Link>
+            <Link to="/places" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Places
+              </li>
+            </Link>
+            <Link to="/vehicles" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Vehicle
               </li>
             </Link>
             <li className="sidebarListItem">

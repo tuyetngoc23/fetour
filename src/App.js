@@ -3,6 +3,7 @@ import Footer from './view/Footer';
 import Header from './view/Header';
 import Home  from './view/Home';
 import Tour from './view/Tour'
+import Tour1 from './pages/tour/Tour1'
 import TourDetail from './view/TourDetail';
 import Blog from './view/Blog'
 import BlogDetail from './view/BlogDetail';
@@ -11,17 +12,18 @@ import Booking from './view/Booking';
 import OrderDetail from './view/OrderDetail';
 import Contact from './view/Contact';
 import Login from './view/Login';
-import { Router } from 'react-router';
+// import { Router } from 'react-router';
 import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
-import ProductList from "./pages/productList/ProductList";
+// import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Home1 from "./pages/home/Home1"
 import { useState } from 'react';
+import TourList from './pages/tourList/TourList';
 // import "swiper/css/bundle";
 
 function App() {
@@ -56,9 +58,10 @@ function App() {
         <Route exact path="/users" component={UserList}></Route>
         <Route exact path="/user/:userId" component={User}></Route>
         <Route exact path="/newUser" component={NewUser}></Route>
-        <Route exact path="/products" component={ProductList}></Route>
-        <Route exact path="/product/:productId" component={Product}></Route>
-        <Route exact path="/newproduct" component={NewProduct}></Route>
+        <Route exact path="/tours" component={TourList}></Route>
+        <Route exact path="/tour/:tourId" component={Tour1}></Route>
+        {/* <Route exact path="/tour/:tourId" component={Product}></Route> */}
+        <Route exact path="/newtour" component={NewProduct}></Route>
       </Switch>
       </div>
     </BrowserRouter>
