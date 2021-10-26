@@ -60,12 +60,6 @@ export default function TourList() {
                 );
             },
         },
-        // { field: "name", headerName: "Name", width: 200 },
-        // {
-        //     field: "status",
-        //     headerName: "Status",
-        //     width: 120,
-        // },
         {
             field: "price",
             headerName: "Price",
@@ -111,6 +105,12 @@ export default function TourList() {
 
     return (
         <div className="tourList">
+            <div className="tourTitleContainer">
+                <h1 className="tourTitle">Tour</h1>
+                <Link to="/newtour">
+                    <button className="tourAddButton">Create</button>
+                </Link>
+            </div>
             <DataGrid
                 rows={tours}
                 disableSelectionOnClick

@@ -115,15 +115,47 @@ export default function Tour1() {
     const handleSelected = (e ) => {
         setSelectes(e)
     }
+    //save edit tour-tour_place
+    const [name, setName] = useState(tour.name)
+    const [price, setPrice] = useState(tour.price)
+    const [min, setMin] = useState(tour.min_amount)
+    const [max, setMax] = useState(tour.max_amount)
+    const [startDay, setStartDay] = useState(tour.start_day)
+    const [endDay, setEndDay] = useState(tour.end_day)
+    const [departure, setDeparture] = useState(tour.department.id)
+    const [cattour, setCattour] = useState(tour.cattour.id)
+    const [hotelTour, setHotelTour] = useState(tour.hotel.id)
+    const [vehicleTour, setVehicleTour] = useState(tour.vehicle.id)
+    const [content, setContent] = useState(tour.content)
+    const [note, setNote] = useState(tour.note)
+    const [image, setImage] = useState(tour.image)
+
+    const handleSaveTour = (e) => {
+        e.preventDefault();
+        let saveTour = () => {
+            const formTour = new FormData();
+            formTour.append("id", tour.id)
+            formTour.append("name", name);
+            formTour.append("price", price)
+            formTour.append("min_amount", min);
+            formTour.append("max_amount", max);
+            formTour.append("start_day", startDay);
+            formTour.append("end_day", endDay);
+            formTour.append("tour.department.id", departure);
+            formTour.append("tour.cattour.id", cattour);
+            formTour.append("tour.hotel.id", hotelTour);
+            formTour.append("tour.vehicel.id", vehicleTour);
+            formTour.append("content", content);
+            formTour.append("note", note);
+            formTour.append("image", image);
+            formTour.append("state", 1);
+        }
+        saveTour();
+    }
+    
 
     return (
         <div className="tour">
-            <div className="tourTitleContainer">
-                <h1 className="tourTitle">Tour</h1>
-                <Link to="/newproduct">
-                    <button className="tourAddButton">Create</button>
-                </Link>
-            </div>
             <div className="tourTop">
                 <div className="tourTopLeft">
                     <Chart data={productData} dataKey="Sales" title="Sales Performance" />
@@ -154,22 +186,25 @@ export default function Tour1() {
                 </div>
             </div>
             <div className="tourBottom">
-                <form className="tourForm">
+                <form className="tourForm" onSubmit={handleSaveTour}>
                     <div className="tourFormLeft">
                         <label>Tour Name</label>
-                        <input type="text" placeholder={tour.name} />
+                        <input type="text"  placeholder={tour.name} onChange={(e) => setName(e.target.value)}/>
                         <label>Price</label>
-                        <input type="number" placeholder={tour.price} />
+                        <input type="number" placeholder={tour.price}
+                                onChange={(e) => setPrice(e.target.value)}/>
                         <label>Min amount</label>
-                        <input type="number" placeholder={tour.min_amount} />
+                        <input type="number" placeholder={tour.min_amount} 
+                                onChange={(e) => setMin(e.target.value)}/>
                         <label>Max amount</label>
-                        <input type="number" placeholder={tour.max_amount} />
+                        <input type="number" placeholder={tour.max_amount} 
+                                onChange={(e) => setMax(e.target.value)}/>
                         <label>Start day:</label>
-                        <input type="date" />
+                        <input type="date" onChange={(e) => setStartDay(e.target.value)}/>
                         <label>End day:</label>
-                        <input type="date" />
+                        <input type="date" onChange={(e) => setEndDay(e.target.value)}/>
                         <label>Departure</label>
-                        <select name="departure" id="idDeparture">
+                        <select name="departure" id="idDeparture" onChange={(e) => setDeparture(e.target.value)}>
                             <option value={tour.department.id}>{tour.department.address}</option>
                             {
                                 department.length > 0 && department.map(item => (
@@ -179,7 +214,7 @@ export default function Tour1() {
                             }
                         </select>
                         <label>Cattour</label>
-                        <select name="cattour" id="idCattour">
+                        <select name="cattour" id="idCattour" onChange={(e) => setCattour(e.target.value)}> 
                             <option value={tour.cattour.id}>{tour.cattour.name}</option>
                             {
                                 cat.length > 0 && cat.map(item => (
@@ -193,7 +228,7 @@ export default function Tour1() {
 
                     <div className="tourFormLeft">
                         <label>Hotel</label>
-                        <select name="hotel" id="idHotel">
+                        <select name="hotel" id="idHotel" onChange={(e) => setHotelTour(e.target.value)}>
                             <option value={tour.hotel.id}>{tour.hotel.type}</option>
                             {
                                 hotel.length > 0 && hotel.map(item => (
@@ -203,7 +238,7 @@ export default function Tour1() {
                             }
                         </select>
                         <label>Vehicle</label>
-                        <select name="vehicle" id="idVehicle">
+                        <select name="vehicle" id="idVehicle" onChange={(e) => setVehicleTour(e.target.value)}>
                             <option value={tour.vehicle.id}>{tour.vehicle.ten}</option>
                             {
                                 vehicle.length > 0 && vehicle.map(item => (
@@ -213,14 +248,9 @@ export default function Tour1() {
                             }
                         </select>
                         <label>Content</label>
-                        <textarea rows={5} placeholder={tour.content}></textarea>
+                        <textarea rows={5} placeholder={tour.content} onChange={(e) => setContent(e.target.value)}></textarea>
                         <label>Note</label>
-                        <textarea rows={5} placeholder={tour.note}></textarea>
-                        <label>Do you hava change place</label>
-                        <select name="active" id="active">
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
-                        </select>
+                        <textarea rows={5} placeholder={tour.note} onChange={(e) => setNote(e.target.value)}></textarea>
                         <label>Place</label>
                         <Select 
                             closeMenuOnSelect={false}
@@ -237,9 +267,9 @@ export default function Tour1() {
                             <label htmlFor="file">
                                 <Publish />
                             </label>
-                            <input type="file" id="file" style={{ display: "none" }} />
+                            <input type="file" id="file" style={{ display: "none" }} onChange={(e) => setImage(e.target.value)}/>
                         </div>
-                        <button className="tourButton">Update</button>
+                        <button className="tourButton" type="submit">Update</button>
                     </div>
                 </form>
             </div>

@@ -24,6 +24,7 @@ import NewProduct from "./pages/newProduct/NewProduct";
 import Home1 from "./pages/home/Home1"
 import { useState } from 'react';
 import TourList from './pages/tourList/TourList';
+import NewTour from './pages/newTour/NewTour';
 // import "swiper/css/bundle";
 
 function App() {
@@ -61,40 +62,12 @@ function App() {
         <Route exact path="/tours" component={TourList}></Route>
         <Route exact path="/tour/:tourId" component={Tour1}></Route>
         {/* <Route exact path="/tour/:tourId" component={Product}></Route> */}
-        <Route exact path="/newtour" component={NewProduct}></Route>
+        <Route exact path="/newtour" component={NewTour}></Route>
+        <Route exact path="/newuser" component={NewUser}></Route>
       </Switch>
       </div>
     </BrowserRouter>
       }
-      {/* <BrowserRouter>
-        <Topbar />
-        <div className="container">
-          <Sidebar />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/users">
-              <UserList />
-            </Route>
-            <Route path="/user/:userId">
-              <User />
-            </Route>
-            <Route path="/newUser">
-              <NewUser />
-            </Route>
-            <Route path="/products">
-              <ProductList />
-            </Route>
-            <Route path="/product/:productId">
-              <Product />
-            </Route>
-            <Route path="/newproduct">
-              <NewProduct />
-            </Route>
-          </Switch>
-        </div>
-      </BrowserRouter>  */}
     </>
   );
 }
