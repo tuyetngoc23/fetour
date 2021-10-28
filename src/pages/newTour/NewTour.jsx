@@ -5,6 +5,7 @@ import './newTour.css'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import {useHistory} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 
 export default function NewTour() {
     //get Vehicle
@@ -97,7 +98,8 @@ export default function NewTour() {
     const [note, setNote] = useState()
     const [image, setImage] = useState()
     const history = useHistory();
-    
+    // const dispatchTour = useDispatch();
+
     const handleSaveTour = async (e) => {
         e.preventDefault();
         let saveTour = async () => {
@@ -149,6 +151,10 @@ export default function NewTour() {
              cattour != null & startDay < endDay & selectes.length > 0){
                 saveTour();
                 history.push("/tours")
+                // dispatchTour({
+                //     type: "GET_TOUR",
+                //     payload: null
+                // })
              }else{
                  alert("Vui lòng nhập đầy đủ thông tin")
              }

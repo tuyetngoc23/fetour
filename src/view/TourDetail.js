@@ -105,7 +105,7 @@ function TourDetail() {
             .then(res => {
                 dispatchTour({
                     type: "GET_TOUR",
-                    payload: res.data
+                    payload: res.data 
                 })
             })
             .catch(err => {

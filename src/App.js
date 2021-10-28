@@ -19,12 +19,17 @@ import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
 // import ProductList from "./pages/productList/ProductList";
-import Product from "./pages/product/Product";
-import NewProduct from "./pages/newProduct/NewProduct";
+// import Product from "./pages/product/Product";
+// import NewProduct from "./pages/newProduct/NewProduct";
 import Home1 from "./pages/home/Home1"
 import { useState } from 'react';
 import TourList from './pages/tourList/TourList';
 import NewTour from './pages/newTour/NewTour';
+import PlaceList from './pages/placeList/PlaceList';
+import Place from './pages/place/Place';
+import NewPlace from './pages/newPlace/NewPlace';
+import CattourList from './pages/cattourList/CattourList';
+import NewCattour from './pages/newCattour/NewCattour';
 // import "swiper/css/bundle";
 
 function App() {
@@ -60,10 +65,13 @@ function App() {
         <Route exact path="/user/:userId" component={User}></Route>
         <Route exact path="/newUser" component={NewUser}></Route>
         <Route exact path="/tours" component={TourList}></Route>
-        <Route exact path="/tour/:tourId" component={Tour1}></Route>
-        {/* <Route exact path="/tour/:tourId" component={Product}></Route> */}
+        <Route  path="/tour/:tourId" component={Tour1}></Route>
         <Route exact path="/newtour" component={NewTour}></Route>
-        <Route exact path="/newuser" component={NewUser}></Route>
+        <Route exact path="/places" component={PlaceList}></Route>
+        <Route exact path="/place/:id" component={Place}></Route>
+        <Route exact path="/newPlace" component={NewPlace}></Route>
+        <Route exact path="/cattours" component={CattourList}></Route>
+        <Route exact path="/newCattour" component={NewCattour}></Route>
       </Switch>
       </div>
     </BrowserRouter>

@@ -7,9 +7,10 @@ import axios from 'axios';
 import NumberFormat from "react-number-format";
 import { useDispatch } from "react-redux";
 
-export default function TourList() {
+function TourList() {
 
     const [tours, setTours] = useState([])
+    // const [tourDis, setTourDis] = useState()
     const dispatchTour = useDispatch();
     // const [data, setData] = useState(productRows);
     useEffect(() => {
@@ -17,16 +18,35 @@ export default function TourList() {
             .get(`http://localhost:9090/tour`)
             .then(res => {
                 setTours(res.data)
+                dispatchTour({
+                    type: "GET_TOUR",
+                    payload: res.data
+                })
+                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
             })
     }, [])
+    ;
+    const loadTour = (id) => {
+        axios
+           .get(`http://localhost:9090/tour/${id}`)
+           .then(res => {
+               console.log(res.data);
+               dispatchTour({
+                   type: "GET_TOUR",
+                   payload: res.data
+               })
+           })
+           .catch(err => {
+               console.log(err);
+           })
+    }
+    
 
 
     const handleDelete = (id) => {
-
-
         axios.post(`http://localhost:9090/tour/delete/${id}`)
             .then(res => {
                 console.log("delete success");
@@ -44,7 +64,7 @@ export default function TourList() {
             })
 
     };
-
+    let tourDis = [];
     const columns = [
         { field: "id", headerName: "ID", width: 100 },
         {
@@ -76,21 +96,10 @@ export default function TourList() {
             field: "action",
             headerName: "Action",
             width: 150,
-            renderCell: (params) => {
-                axios
-                    .get(`http://localhost:9090/tour/${params.row.id}`)
-                    .then(res => {
-                        dispatchTour({
-                            type: "GET_TOUR",
-                            payload: res.data
-                        })
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
+            renderCell:  (params) => {
                 return (
                     <>
-                        <Link to={"/tour/" + params.row.id}>
+                        <Link to={`/tour/${params.row.id}`}>
                             <button className="tourListEdit">Edit</button>
                         </Link>
                         <DeleteOutline
@@ -102,6 +111,7 @@ export default function TourList() {
             },
         },
     ];
+    // console.log(tourDis);
 
     return (
         <div className="tourList">
@@ -121,3 +131,4 @@ export default function TourList() {
         </div>
     );
 }
+export default TourList

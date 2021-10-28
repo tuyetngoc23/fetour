@@ -2,20 +2,23 @@ import { Link } from "react-router-dom";
 import "./tour.css";
 import Chart from "../../components/chart/Chart"
 import { productData } from "../../dummyData"
-import { Publish } from "@material-ui/icons";
+import { Publish, SystemUpdate } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Moment from "react-moment";
-import { useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 export default function Tour1() {
     const { tourId } = useParams();
-    const tour = useSelector(state => state.tour.tour)
+    
+    const tourList = useSelector(state => state.tour.tour)
     const [place, setPlace] = useState([])
     const [selectes, setSelectes] = useState([])
+    // const [tour, setTour] = useState({});
+
     //get Vehicle
     const [vehicle, setVehicle] = useState([]);
 
@@ -89,14 +92,14 @@ export default function Tour1() {
         axios
             .get(`http://localhost:9090/place/list`)
             .then(res => {
-               setPlace(res.data)
+                setPlace(res.data)
             })
             .catch(err => {
                 console.log(err);
             })
     }, [])
 
-    
+
     const option = place.map(d => ({
         "value": d.id,
         "label": d.name
@@ -105,17 +108,43 @@ export default function Tour1() {
     let placeShow = [];
     for (let index = 0; index < option.length; index++) {
         for (let i = 0; i < placeOfTour.length; i++) {
-            if(option[index].value === placeOfTour[i].id){
+            if (option[index].value === placeOfTour[i].id) {
                 placeShow.push(index)
             }
         }
-        
+
     }
-    
-    const handleSelected = (e ) => {
+
+    const handleSelected = (e) => {
         setSelectes(e)
     }
-    //save edit tour-tour_place
+
+    console.log(tourList);
+    let tour = {};
+    for (let index = 0; index < tourList.length; index++) {
+        if(tourList[index].id === tourId){
+            tour.push(tourList[index])
+            console.log("load tour")
+            console.log(tour);
+            break;
+        }
+    }
+    // getTour
+    // const [tour, setTour] = useState(null)
+    // useEffect(() => {
+    //     axios
+    //         .get(`http://localhost:9090/tour/${tourId}`)
+    //         .then(res => {
+    //             setTour(res.data)
+    //             console.log(res.data);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         })
+    // })
+    console.log(tourId);
+    console.log(tour);
+    // save edit tour-tour_place
     const [name, setName] = useState(tour.name)
     const [price, setPrice] = useState(tour.price)
     const [min, setMin] = useState(tour.min_amount)
@@ -130,29 +159,59 @@ export default function Tour1() {
     const [note, setNote] = useState(tour.note)
     const [image, setImage] = useState(tour.image)
 
+    // const [name, setName] = useState("")
+    // const [price, setPrice] = useState("")
+    // const [min, setMin] = useState(0)
+    // const [max, setMax] = useState(0)
+    // const [startDay, setStartDay] = useState(new Date())
+    // const [endDay, setEndDay] = useState(new Date())
+    // const [departure, setDeparture] = useState()
+    // const [cattour, setCattour] = useState()
+    // const [hotelTour, setHotelTour] = useState()
+    // const [vehicleTour, setVehicleTour] = useState()
+    // const [content, setContent] = useState()
+    // const [note, setNote] = useState()
+    // const [image, setImage] = useState()
+
     const handleSaveTour = (e) => {
         e.preventDefault();
-        let saveTour = () => {
+        let saveTour = async () => {
             const formTour = new FormData();
             formTour.append("id", tour.id)
             formTour.append("name", name);
             formTour.append("price", price)
             formTour.append("min_amount", min);
             formTour.append("max_amount", max);
-            formTour.append("start_day", startDay);
-            formTour.append("end_day", endDay);
+            formTour.append("start_day", new Date(startDay));
+            formTour.append("end_day", new Date(endDay));
             formTour.append("tour.department.id", departure);
             formTour.append("tour.cattour.id", cattour);
             formTour.append("tour.hotel.id", hotelTour);
             formTour.append("tour.vehicel.id", vehicleTour);
             formTour.append("content", content);
             formTour.append("note", note);
-            formTour.append("image", image);
+            formTour.append("image", "hitashi-nhat-ban.jpg");
+            formTour.append("file", document.getElementById("file").files[0])
             formTour.append("state", 1);
+            await axios.post(`http://localhost:9090/tour/update`, formTour, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            selectes.map((item, index) => {
+                const formTourPlace = new FormData();
+                formTourPlace.append("tour.id", tour.id)
+                formTourPlace.append("place.id", item.value)
+                axios.post(`http://localhost:9090/place/tour/update`, formTourPlace, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                });
+            })
         }
         saveTour();
     }
-    
+
 
     return (
         <div className="tour">
@@ -189,20 +248,20 @@ export default function Tour1() {
                 <form className="tourForm" onSubmit={handleSaveTour}>
                     <div className="tourFormLeft">
                         <label>Tour Name</label>
-                        <input type="text"  placeholder={tour.name} onChange={(e) => setName(e.target.value)}/>
+                        <input type="text" placeholder={tour.name} onChange={(e) => setName(e.target.value)} />
                         <label>Price</label>
                         <input type="number" placeholder={tour.price}
-                                onChange={(e) => setPrice(e.target.value)}/>
+                            onChange={(e) => setPrice(e.target.value)} />
                         <label>Min amount</label>
-                        <input type="number" placeholder={tour.min_amount} 
-                                onChange={(e) => setMin(e.target.value)}/>
+                        <input type="number" placeholder={tour.min_amount}
+                            onChange={(e) => setMin(e.target.value)} />
                         <label>Max amount</label>
-                        <input type="number" placeholder={tour.max_amount} 
-                                onChange={(e) => setMax(e.target.value)}/>
+                        <input type="number" placeholder={tour.max_amount}
+                            onChange={(e) => setMax(e.target.value)} />
                         <label>Start day:</label>
-                        <input type="date" onChange={(e) => setStartDay(e.target.value)}/>
+                        <input type="date" onChange={(e) => setStartDay(e.target.value)} />
                         <label>End day:</label>
-                        <input type="date" onChange={(e) => setEndDay(e.target.value)}/>
+                        <input type="date" onChange={(e) => setEndDay(e.target.value)} />
                         <label>Departure</label>
                         <select name="departure" id="idDeparture" onChange={(e) => setDeparture(e.target.value)}>
                             <option value={tour.department.id}>{tour.department.address}</option>
@@ -214,7 +273,7 @@ export default function Tour1() {
                             }
                         </select>
                         <label>Cattour</label>
-                        <select name="cattour" id="idCattour" onChange={(e) => setCattour(e.target.value)}> 
+                        <select name="cattour" id="idCattour" onChange={(e) => setCattour(e.target.value)}>
                             <option value={tour.cattour.id}>{tour.cattour.name}</option>
                             {
                                 cat.length > 0 && cat.map(item => (
@@ -252,12 +311,12 @@ export default function Tour1() {
                         <label>Note</label>
                         <textarea rows={5} placeholder={tour.note} onChange={(e) => setNote(e.target.value)}></textarea>
                         <label>Place</label>
-                        <Select 
+                        <Select
                             closeMenuOnSelect={false}
                             components={animatedComponents}
                             isMulti
                             options={option}
-                            onChange= {handleSelected}
+                            onChange={handleSelected}
                         />
                     </div>
                     <div className="tourFormRight">
@@ -267,7 +326,7 @@ export default function Tour1() {
                             <label htmlFor="file">
                                 <Publish />
                             </label>
-                            <input type="file" id="file" style={{ display: "none" }} onChange={(e) => setImage(e.target.value)}/>
+                            <input type="file" id="file" onChange={(e) => setImage(e.target.value)} />
                         </div>
                         <button className="tourButton" type="submit">Update</button>
                     </div>

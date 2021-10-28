@@ -1,0 +1,40 @@
+.newCattour {
+    flex: 4;
+  }
+  
+  .addCattourForm {
+    margin-top: 10px;
+  }
+  
+  .addCattourItem {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .addCattourItem > label {
+    color: gray;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .addCattourItem > input {
+    padding: 10px;
+  }
+  
+  .addCattourItem > select {
+    padding: 10px;
+  }
+  
+  .addCattourButton {
+    margin-top: 10px;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
