@@ -1,0 +1,40 @@
+.newDepartment {
+    flex: 4;
+  }
+  
+  .addDepartmentForm {
+    margin-top: 10px;
+  }
+  
+  .addDepartmentItem {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .addDepartmentItem > label {
+    color: gray;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .addDepartmentItem > input {
+    padding: 10px;
+  }
+  
+  .addDepartmentItem > select {
+    padding: 10px;
+  }
+  
+  .addDepartmentButton {
+    margin-top: 10px;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  

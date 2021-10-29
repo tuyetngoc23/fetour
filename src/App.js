@@ -30,6 +30,10 @@ import Place from './pages/place/Place';
 import NewPlace from './pages/newPlace/NewPlace';
 import CattourList from './pages/cattourList/CattourList';
 import NewCattour from './pages/newCattour/NewCattour';
+import DepartmentList from './pages/deparmentList/DepartmentList';
+import NewDepartment from './pages/newDepartment/NewDepartment';
+import HotelList from './pages/hotelList/HotelList';
+import NewHotel from './pages/newHotel/NewHotel';
 // import "swiper/css/bundle";
 
 function App() {
@@ -72,6 +76,10 @@ function App() {
         <Route exact path="/newPlace" component={NewPlace}></Route>
         <Route exact path="/cattours" component={CattourList}></Route>
         <Route exact path="/newCattour" component={NewCattour}></Route>
+        <Route exact path="/departments" component={DepartmentList}></Route>
+        <Route exact path="/newDepartment" component={NewDepartment}></Route>
+        <Route exact path="/hotels" component={HotelList}></Route>
+        <Route exact path="/newHotel" component={NewHotel}></Route>
       </Switch>
       </div>
     </BrowserRouter>

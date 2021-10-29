@@ -222,7 +222,7 @@ export default function NewTour() {
                         {
                             hotel.length > 0 && hotel.map(item => (
 
-                                <option value={item.id} key={item.id}>{item.type}</option>
+                                <option value={item.id} key={item.id}>{item.name}</option>
                             ))
                         }
                     </select>

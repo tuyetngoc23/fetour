@@ -80,7 +80,13 @@ export default function Sidebar() {
             <Link to="/vehicles" className="link">
               <li className="sidebarListItem">
                 <Storefront className="sidebarIcon" />
-                Vehicle
+                Vehicles
+              </li>
+            </Link>
+            <Link to="/departments" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Departments
               </li>
             </Link>
             <li className="sidebarListItem">
