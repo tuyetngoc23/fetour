@@ -34,6 +34,8 @@ import DepartmentList from './pages/deparmentList/DepartmentList';
 import NewDepartment from './pages/newDepartment/NewDepartment';
 import HotelList from './pages/hotelList/HotelList';
 import NewHotel from './pages/newHotel/NewHotel';
+import VehicleList from './pages/vehicleList/VehicleList';
+import NewVehicle from './pages/newVehicle/NewVehicle';
 // import "swiper/css/bundle";
 
 function App() {
@@ -80,6 +82,8 @@ function App() {
         <Route exact path="/newDepartment" component={NewDepartment}></Route>
         <Route exact path="/hotels" component={HotelList}></Route>
         <Route exact path="/newHotel" component={NewHotel}></Route>
+        <Route exact path="/vehicles" component={VehicleList}></Route>
+        <Route exact path="/newVehicle" component={NewVehicle}></Route>
       </Switch>
       </div>
     </BrowserRouter>
