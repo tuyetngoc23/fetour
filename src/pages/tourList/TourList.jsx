@@ -5,44 +5,43 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import NumberFormat from "react-number-format";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 function TourList() {
 
     const [tours, setTours] = useState([])
     // const [tourDis, setTourDis] = useState()
-    const dispatchTour = useDispatch();
+    // const dispatchTour = useDispatch();
     // const [data, setData] = useState(productRows);
     useEffect(() => {
         axios
             .get(`http://localhost:9090/tour`)
             .then(res => {
                 setTours(res.data)
-                dispatchTour({
-                    type: "GET_TOUR",
-                    payload: res.data
-                })
+                // dispatchTour({
+                //     type: "GET_TOUR",
+                //     payload: res.data
+                // })
                 console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
             })
-    }, [])
-    ;
-    const loadTour = (id) => {
-        axios
-           .get(`http://localhost:9090/tour/${id}`)
-           .then(res => {
-               console.log(res.data);
-               dispatchTour({
-                   type: "GET_TOUR",
-                   payload: res.data
-               })
-           })
-           .catch(err => {
-               console.log(err);
-           })
-    }
+    }, []);
+    // const loadTour = (id) => {
+    //     axios
+    //        .get(`http://localhost:9090/tour/${id}`)
+    //        .then(res => {
+    //            console.log(res.data);
+    //            dispatchTour({
+    //                type: "GET_TOUR",
+    //                payload: res.data
+    //            })
+    //        })
+    //        .catch(err => {
+    //            console.log(err);
+    //        })
+    // }
     
 
 
@@ -64,7 +63,7 @@ function TourList() {
             })
 
     };
-    let tourDis = [];
+    // let tourDis = [];
     const columns = [
         { field: "id", headerName: "ID", width: 100 },
         {

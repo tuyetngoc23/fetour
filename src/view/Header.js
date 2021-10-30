@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import ReactModalLogin from 'react-modal-login';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import Slider from 'react-slick';
 
 
 function Header() {
@@ -15,6 +17,7 @@ function Header() {
     const [user, setUser] = useState(null);
     const [userTour, setUserTour] = useState({})
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const openModal = () => {
         setShowModal(true);
@@ -59,7 +62,7 @@ function Header() {
         scope: "profile email"
     };
 
-   
+
     useEffect(() => {
         axios.get(`http://localhost:9090/user/list`)
             .then(res => {
@@ -150,12 +153,13 @@ function Header() {
                         dispatch({
                             type: "GET_USER",
                             payload: {
-                                id : res2.data.id,
+                                id: res2.data.id,
                                 username: res2.data.username,
                                 avatar: res2.data.avatar,
                                 cusname: res2.data.cusname,
                                 email: res2.data.email,
-                                phone: res2.data.phone
+                                phone: res2.data.phone,
+                                role: res2.data.user_role
                             }
                         })
                         setError(null)
@@ -182,6 +186,14 @@ function Header() {
         setUser(null)
     }
 
+    const settings = {
+        // slidesToShow: 1,
+        // slidesToScroll: 1,
+        infinite: true,
+        fade: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+    };
     return (
         <>
             <header>
@@ -204,195 +216,195 @@ function Header() {
                         </li>
                         {
                             user === null ?
-                            <li className="nav-item" role="presentation">
-                             <button className="nav-link" id="pills-child-tab" onClick={openModal}>Login</button>
-                            </li>
-                            : <li className="nav-item" role="presentation">
-                                <button className="nav-link" id="pills-child-tab" onClick={onLogout}><span>{user.username}</span>/Logout</button>
-                            </li>
+                                <li className="nav-item" role="presentation">
+                                    <button className="nav-link" id="pills-child-tab" onClick={openModal}>Login</button>
+                                </li>
+                                : <li className="nav-item" role="presentation">
+                                    <button className="nav-link" id="pills-child-tab" onClick={onLogout}><span>{user.username}</span>/Logout</button>
+                                </li>
                         }
                     </ul>
                     <ul>
-                    
+
                     </ul>
                 </div>
                 <ReactModalLogin
-                        visible={showModal}
-                        onCloseModal={closeModal}
-                        loading={loading}
-                        error={error}
-                        tabs={{
-                            afterChange: afterTabsChange
-                        }}
-                        loginError={{
-                            label: "Couldn't sign in, please try again."
-                        }}
-                        registerError={{
-                            label: "Couldn't sign up, please try again."
-                        }}
-                        startLoading={startLoading}
-                        finishLoading={finishLoading}
-                        form={{
-                            onLogin: onLogin,
-                            onRegister: onRegister,
-                            // onRecoverPassword: this.onRecoverPassword.bind(this),
+                    visible={showModal}
+                    onCloseModal={closeModal}
+                    loading={loading}
+                    error={error}
+                    tabs={{
+                        afterChange: afterTabsChange
+                    }}
+                    loginError={{
+                        label: "Couldn't sign in, please try again."
+                    }}
+                    registerError={{
+                        label: "Couldn't sign up, please try again."
+                    }}
+                    startLoading={startLoading}
+                    finishLoading={finishLoading}
+                    form={{
+                        onLogin: onLogin,
+                        onRegister: onRegister,
+                        // onRecoverPassword: this.onRecoverPassword.bind(this),
 
-                            // recoverPasswordSuccessLabel: this.state.recoverPasswordSuccess
-                            //   ? {
-                            //       label: "New password has been sent to your mailbox!"
-                            //     }
-                            //   : null,
-                            recoverPasswordAnchor: {
-                                label: "Forgot your password?"
+                        // recoverPasswordSuccessLabel: this.state.recoverPasswordSuccess
+                        //   ? {
+                        //       label: "New password has been sent to your mailbox!"
+                        //     }
+                        //   : null,
+                        recoverPasswordAnchor: {
+                            label: "Forgot your password?"
+                        },
+                        loginBtn: {
+                            label: "Sign in"
+                        },
+                        registerBtn: {
+                            label: "Sign up"
+                        },
+                        recoverPasswordBtn: {
+                            label: "Send new password"
+                        },
+                        loginInputs: [
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Username',
+                                type: 'text',
+                                inputClass: 'RML-form-control',
+                                id: 'username',
+                                name: 'username',
+                                placeholder: 'Username',
                             },
-                            loginBtn: {
-                                label: "Sign in"
-                            },
-                            registerBtn: {
-                                label: "Sign up"
-                            },
-                            recoverPasswordBtn: {
-                                label: "Send new password"
-                            },
-                            loginInputs: [
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Username',
-                                    type: 'text',
-                                    inputClass: 'RML-form-control',
-                                    id: 'username',
-                                    name: 'username',
-                                    placeholder: 'Username',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Password',
-                                    type: 'password',
-                                    inputClass: 'RML-form-control',
-                                    id: 'password',
-                                    name: 'password',
-                                    placeholder: 'Password',
-                                }
-                            ],
-                            registerInputs: [
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Username',
-                                    type: 'text',
-                                    inputClass: 'RML-form-control',
-                                    id: 'username',
-                                    name: 'username',
-                                    placeholder: 'Username',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Email',
-                                    type: 'email',
-                                    inputClass: 'RML-form-control',
-                                    id: 'email',
-                                    name: 'email',
-                                    placeholder: 'Email',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Password',
-                                    type: 'password',
-                                    inputClass: 'RML-form-control',
-                                    id: 'password',
-                                    name: 'password',
-                                    placeholder: 'Password',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Confirm Password',
-                                    type: 'password',
-                                    inputClass: 'RML-form-control',
-                                    id: 'confirm',
-                                    name: 'confirm',
-                                    placeholder: 'Confirm Password',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Họ tên',
-                                    type: 'text',
-                                    inputClass: 'RML-form-control',
-                                    id: 'cusname',
-                                    name: 'cusname',
-                                    placeholder: 'Họ tên',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Số điện thoại',
-                                    type: 'number',
-                                    // min: 0,
-                                    // max: 9999999999,
-                                    inputClass: 'RML-form-control',
-                                    id: 'phone',
-                                    name: 'phone',
-                                    placeholder: 'Số điện thoại',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Ngày sinh',
-                                    type: 'date',
-                                    inputClass: 'RML-form-control',
-                                    id: 'birthday',
-                                    name: 'birthday',
-                                    placeholder: 'Ngày sinh',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Địa chỉ',
-                                    type: 'text',
-                                    inputClass: 'RML-form-control',
-                                    id: 'address',
-                                    name: 'address',
-                                    placeholder: 'Địa chỉ',
-                                },
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Ảnh đại diện',
-                                    type: 'file',
-                                    inputClass: 'RML-form-control',
-                                    id: 'avatar',
-                                    name: 'avatar',
-                                    placeholder: 'Ảnh đại diện',
-                                    accept: "images/*"
-                                }
-                            ],
-                            recoverPasswordInputs: [
-                                {
-                                    containerClass: 'RML-form-group',
-                                    label: 'Email',
-                                    type: 'email',
-                                    inputClass: 'RML-form-control',
-                                    id: 'email',
-                                    name: 'email',
-                                    placeholder: 'Email',
-                                },
-                            ],
-                        }}
-                        separator={{
-                            label: "or"
-                        }}
-                        providers={{
-                            facebook: {
-                                config: facebook,
-                                onLoginSuccess: onLoginSuccess,
-                                onLoginFail: onLoginFail,
-                                label: "Continue with Facebook"
-                            },
-                            google: {
-                                config: google,
-                                onLoginSuccess: onLoginSuccess,
-                                onLoginFail: onLoginFail,
-                                label: "Continue with Google"
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Password',
+                                type: 'password',
+                                inputClass: 'RML-form-control',
+                                id: 'password',
+                                name: 'password',
+                                placeholder: 'Password',
                             }
-                        }}
-                    >
+                        ],
+                        registerInputs: [
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Username',
+                                type: 'text',
+                                inputClass: 'RML-form-control',
+                                id: 'username',
+                                name: 'username',
+                                placeholder: 'Username',
+                            },
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Email',
+                                type: 'email',
+                                inputClass: 'RML-form-control',
+                                id: 'email',
+                                name: 'email',
+                                placeholder: 'Email',
+                            },
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Password',
+                                type: 'password',
+                                inputClass: 'RML-form-control',
+                                id: 'password',
+                                name: 'password',
+                                placeholder: 'Password',
+                            },
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Confirm Password',
+                                type: 'password',
+                                inputClass: 'RML-form-control',
+                                id: 'confirm',
+                                name: 'confirm',
+                                placeholder: 'Confirm Password',
+                            },
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Họ tên',
+                                type: 'text',
+                                inputClass: 'RML-form-control',
+                                id: 'cusname',
+                                name: 'cusname',
+                                placeholder: 'Họ tên',
+                            },
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Số điện thoại',
+                                type: 'number',
+                                // min: 0,
+                                // max: 9999999999,
+                                inputClass: 'RML-form-control',
+                                id: 'phone',
+                                name: 'phone',
+                                placeholder: 'Số điện thoại',
+                            },
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Ngày sinh',
+                                type: 'date',
+                                inputClass: 'RML-form-control',
+                                id: 'birthday',
+                                name: 'birthday',
+                                placeholder: 'Ngày sinh',
+                            },
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Địa chỉ',
+                                type: 'text',
+                                inputClass: 'RML-form-control',
+                                id: 'address',
+                                name: 'address',
+                                placeholder: 'Địa chỉ',
+                            },
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Ảnh đại diện',
+                                type: 'file',
+                                inputClass: 'RML-form-control',
+                                id: 'avatar',
+                                name: 'avatar',
+                                placeholder: 'Ảnh đại diện',
+                                accept: "images/*"
+                            }
+                        ],
+                        recoverPasswordInputs: [
+                            {
+                                containerClass: 'RML-form-group',
+                                label: 'Email',
+                                type: 'email',
+                                inputClass: 'RML-form-control',
+                                id: 'email',
+                                name: 'email',
+                                placeholder: 'Email',
+                            },
+                        ],
+                    }}
+                    separator={{
+                        label: "or"
+                    }}
+                    providers={{
+                        facebook: {
+                            config: facebook,
+                            onLoginSuccess: onLoginSuccess,
+                            onLoginFail: onLoginFail,
+                            label: "Continue with Facebook"
+                        },
+                        google: {
+                            config: google,
+                            onLoginSuccess: onLoginSuccess,
+                            onLoginFail: onLoginFail,
+                            label: "Continue with Google"
+                        }
+                    }}
+                >
 
-                    </ReactModalLogin>
-                <div className="slick">
+                </ReactModalLogin>
+                <Slider {...settings}>
                     <div>
                         <div className="title-slick text-uppercase">
                             <h5>Welcome to Our Tour</h5>
@@ -414,7 +426,30 @@ function Header() {
                         </div>
                         <img src={`${process.env.PUBLIC_URL}/asset/images/phuquoc.jpg`} style={{ width: '100%', height: '655px' }} />
                     </div>
-                </div>
+                </Slider>
+                {/* <div className="slick">
+                    <div>
+                        <div className="title-slick text-uppercase">
+                            <h5>Welcome to Our Tour</h5>
+                            <span>Create <strong>your tour</strong></span>
+                        </div>
+                        <img src={`${process.env.PUBLIC_URL}/asset/images/dalat2.jpg`} style={{ width: '100%', height: '655px' }} />
+                    </div>
+                    <div>
+                        <div className="title-slick text-uppercase">
+                            <h5>Welcome to Our Tour</h5>
+                            <span>Exploxe <strong>your tour</strong></span>
+                        </div>
+                        <img src={`${process.env.PUBLIC_URL}/asset/images/vinhhalong.jpg`} style={{ width: '100%', height: '655px' }} />
+                    </div>
+                    <div>
+                        <div className="title-slick text-uppercase">
+                            <h5>Welcome to Our Tour</h5>
+                            <span>Create <strong>your tour</strong></span>
+                        </div>
+                        <img src={`${process.env.PUBLIC_URL}/asset/images/phuquoc.jpg`} style={{ width: '100%', height: '655px' }} />
+                    </div>
+                </div> */}
 
             </header>
         </>

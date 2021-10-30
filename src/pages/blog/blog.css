@@ -1,0 +1,130 @@
+.blog {
+    flex: 4;
+    padding: 20px;
+  }
+  
+  .blogTitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .blogAddButton {
+    width: 80px;
+    border: none;
+    padding: 5px;
+    background-color: teal;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .blogTop {
+    display: flex;
+  }
+  
+  .blogTopLeft,
+  .blogTopRight {
+    flex: 1;
+  }
+  
+  .blogTopRight {
+    padding: 20px;
+    margin: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  
+  .blogInfoImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .blogInfoTop {
+    display: flex;
+    align-items: center;
+  }
+  
+  .blogName {
+    font-weight: 600;
+  }
+  
+  .blogInfoBottom {
+    margin-top: 10px;
+  }
+  
+  .blogInfoItem {
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .blogInfoValue {
+    font-weight: 300;
+  }
+  
+  .blogBottom {
+    padding: 20px;
+    margin: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  
+  .blogForm {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .blogFormLeft {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .blogFormLeft > label {
+    margin-bottom: 10px;
+    color: gray;
+  }
+  
+  .blogFormLeft > input {
+    margin-bottom: 10px;
+    border: none;
+    padding: 5px;
+    border-bottom: 1px solid gray;
+  }
+  
+  .blogFormLeft >select{
+    margin-bottom: 10px;
+  }
+  
+  .blogUploadImg{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .blogFormRight{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  .blogUpload{
+    display: flex;
+    align-items: center;
+  }
+  
+  .blogButton{
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: darkblue;
+    color:white;
+    font-weight: 600;
+    cursor: pointer;
+  }

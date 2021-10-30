@@ -34,10 +34,10 @@ ul{
   color: brown;
 }
 /* slick */
-.slick{
+/* .slick{
   position: relative;
   height: 655px;
-}
+} */
 .slick-prev,
 .slick-next {
    display: none !important; 

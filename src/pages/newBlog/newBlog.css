@@ -1,0 +1,40 @@
+.newBlog {
+    flex: 4;
+  }
+  
+  .addBlogForm {
+    margin-top: 10px;
+  }
+  
+  .addBlogItem {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .addBlogItem > label {
+    color: gray;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .addBlogItem > input {
+    padding: 10px;
+  }
+  
+  .addBlogItem > select {
+    padding: 10px;
+  }
+  
+  .addBlogButton {
+    margin-top: 10px;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  

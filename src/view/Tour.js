@@ -232,8 +232,9 @@ function Tour() {
                                                                     <span><Moment diff={item.start_day} unit="days">{item.end_day}</Moment> Ngày</span>
                                                                 </p>
                                                                 <p id="datetime">
-                                                                    <span>Hotel: {item.hotel.type}</span>
-                                                                    <span>Phương tiện: {item.vehicle.ten}</span>
+                                                                    {item.hotel !== null ?
+                                                                    <span>Hotel: {item.hotel.type}</span> : ""}
+                                                                    {item.vehicle !== null ? <span>Phương tiện: {item.vehicle.ten}</span> : ""}
                                                                 </p>
                                                             </div>
                                                         </div>

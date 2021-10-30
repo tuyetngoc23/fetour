@@ -183,7 +183,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <img src={`${process.env.PUBLIC_URL}/asset/images/66782620_385720765415196_5868615361607237632_n.jpg`} alt="Image" className="img-responsive" />
+            
         </>
 
     )

@@ -36,10 +36,25 @@ import HotelList from './pages/hotelList/HotelList';
 import NewHotel from './pages/newHotel/NewHotel';
 import VehicleList from './pages/vehicleList/VehicleList';
 import NewVehicle from './pages/newVehicle/NewVehicle';
+import BlogList from './pages/blogList/BlogList';
+import Blog1 from './pages/blog/Blog1';
+import NewBlog from './pages/newBlog/NewBlog';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 // import "swiper/css/bundle";
 
 function App() {
-  const [isAdmin, setIsAdmin] = useState(true)
+  let isAdmin = false;
+  
+  const user = useSelector(state => state.user.user)
+  console.log(user);
+  if(user != null){
+    if(user.role.role === "ADMIN"){
+      isAdmin = true;
+    }
+  }else{
+    isAdmin = false;
+  }
   return (
     <>
       {
@@ -48,7 +63,7 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/" component={Home}></Route>
-          <Route exact path="/admin" component={Home1}></Route>
+          {/* <Route exact path="/admin" component={Home1}></Route> */}
           <Route  path="/tour" component={Tour}></Route>
           <Route  path="/blog" component={Blog}></Route>
           <Route  path="/blogdetail/:id" component={BlogDetail}></Route>
@@ -84,6 +99,9 @@ function App() {
         <Route exact path="/newHotel" component={NewHotel}></Route>
         <Route exact path="/vehicles" component={VehicleList}></Route>
         <Route exact path="/newVehicle" component={NewVehicle}></Route>
+        <Route exact path="/blogs" component={BlogList}></Route>
+        <Route exact path="/blog/:id" component={Blog1}></Route>
+        <Route exact path="/newBlog" component={NewBlog}></Route>
       </Switch>
       </div>
     </BrowserRouter>

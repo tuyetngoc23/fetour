@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
 import "./tour.css";
 import Chart from "../../components/chart/Chart"
 import { productData } from "../../dummyData"
-import { Publish, SystemUpdate } from "@material-ui/icons";
+import { Publish } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -10,14 +9,15 @@ import Moment from "react-moment";
 import {  useSelector } from "react-redux";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { useHistory } from "react-router";
 
-export default function Tour1() {
+ function Tour1() {
     const { tourId } = useParams();
-    
-    const tourList = useSelector(state => state.tour.tour)
+    const history = useHistory();
+    // const tourList = useSelector(state => state.tour.tour)
     const [place, setPlace] = useState([])
     const [selectes, setSelectes] = useState([])
-    // const [tour, setTour] = useState({});
+    
 
     //get Vehicle
     const [vehicle, setVehicle] = useState([]);
@@ -119,78 +119,132 @@ export default function Tour1() {
         setSelectes(e)
     }
 
-    console.log(tourList);
-    let tour = {};
-    for (let index = 0; index < tourList.length; index++) {
-        if(tourList[index].id === tourId){
-            tour.push(tourList[index])
-            console.log("load tour")
-            console.log(tour);
-            break;
-        }
-    }
+    // console.log(tourList);
+    // let tour = {};
+    // for (let index = 0; index < tourList.length; index++) {
+    //     if(tourList[index].id === tourId){
+    //         tour=(tourList[index])
+    //         console.log("load tour")
+    //         console.log(tour);
+    //         break;
+    //     }
+    // }
     // getTour
-    // const [tour, setTour] = useState(null)
-    // useEffect(() => {
-    //     axios
-    //         .get(`http://localhost:9090/tour/${tourId}`)
-    //         .then(res => {
-    //             setTour(res.data)
-    //             console.log(res.data);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         })
-    // })
+    const [tour, setTour] = useState({})
+    useEffect(() => {
+        axios
+            .get(`http://localhost:9090/tour/${tourId}`)
+            .then(res => {
+                setTour(res.data)
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    },[])
     console.log(tourId);
     console.log(tour);
-    // save edit tour-tour_place
-    const [name, setName] = useState(tour.name)
-    const [price, setPrice] = useState(tour.price)
-    const [min, setMin] = useState(tour.min_amount)
-    const [max, setMax] = useState(tour.max_amount)
-    const [startDay, setStartDay] = useState(tour.start_day)
-    const [endDay, setEndDay] = useState(tour.end_day)
-    const [departure, setDeparture] = useState(tour.department.id)
-    const [cattour, setCattour] = useState(tour.cattour.id)
-    const [hotelTour, setHotelTour] = useState(tour.hotel.id)
-    const [vehicleTour, setVehicleTour] = useState(tour.vehicle.id)
-    const [content, setContent] = useState(tour.content)
-    const [note, setNote] = useState(tour.note)
-    const [image, setImage] = useState(tour.image)
 
-    // const [name, setName] = useState("")
-    // const [price, setPrice] = useState("")
-    // const [min, setMin] = useState(0)
-    // const [max, setMax] = useState(0)
-    // const [startDay, setStartDay] = useState(new Date())
-    // const [endDay, setEndDay] = useState(new Date())
-    // const [departure, setDeparture] = useState()
-    // const [cattour, setCattour] = useState()
-    // const [hotelTour, setHotelTour] = useState()
-    // const [vehicleTour, setVehicleTour] = useState()
-    // const [content, setContent] = useState()
-    // const [note, setNote] = useState()
-    // const [image, setImage] = useState()
+    const [name, setName] = useState("")
+    const [price, setPrice] = useState("")
+    const [min, setMin] = useState(0)
+    const [max, setMax] = useState(0)
+    const [startDay, setStartDay] = useState()
+    const [endDay, setEndDay] = useState()
+    const [departure, setDeparture] = useState(null)
+    const [cattour, setCattour] = useState(null)
+    const [hotelTour, setHotelTour] = useState(null)
+    const [vehicleTour, setVehicleTour] = useState(null)
+    const [content, setContent] = useState()
+    const [note, setNote] = useState()
 
     const handleSaveTour = (e) => {
+        
         e.preventDefault();
         let saveTour = async () => {
             const formTour = new FormData();
-            formTour.append("id", tour.id)
-            formTour.append("name", name);
-            formTour.append("price", price)
-            formTour.append("min_amount", min);
-            formTour.append("max_amount", max);
-            formTour.append("start_day", new Date(startDay));
-            formTour.append("end_day", new Date(endDay));
-            formTour.append("tour.department.id", departure);
-            formTour.append("tour.cattour.id", cattour);
-            formTour.append("tour.hotel.id", hotelTour);
-            formTour.append("tour.vehicel.id", vehicleTour);
-            formTour.append("content", content);
-            formTour.append("note", note);
-            formTour.append("image", "hitashi-nhat-ban.jpg");
+            formTour.append("id", tourId)
+            if(name === "" || name ===null){
+                formTour.append("name",tour.name)
+            }else{
+                formTour.append("name", name);
+            }
+            if(price === "" || price ===null){
+                if(tour.price === null){
+                    formTour.append("price", 1)
+                }else{
+                    formTour.append("price", tour.price)
+                }
+            }else{
+                formTour.append("price", price)
+            }
+            if(min === 0 || min ===null){
+                formTour.append("min_amount",tour.min_amount)
+            }else{
+                formTour.append("min_amount", min);
+            }
+            if(max === 0 || max ===null){
+                formTour.append("max_amount",tour.max_amount)
+            }else{
+                formTour.append("max_amount", max);
+            }
+            if(startDay === "" || startDay ===null){
+                if(tour.start_day == null){
+                    formTour.append("start_day", new Date())
+                }else{
+                    formTour.append("start_day", new Date(tour.start_day))
+                }
+            }else{
+                if(startDay == null){
+                    formTour.append("start_day", new Date(tour.start_day))
+                }else{
+                    formTour.append("start_day", new Date(startDay));
+                }
+            }
+            if(endDay === "" || endDay ===null){
+                if(tour.end_day == null){
+                    formTour.append("end_day", new Date())
+                }else{
+                    formTour.append("end_day", new Date(tour.end_day))
+                }
+            }else{
+                if(endDay == null){
+                    formTour.append("end_day", new Date(tour.end_day))
+                }else{
+                    formTour.append("end_day", new Date(endDay));
+                }
+            }
+            if(departure === "" || departure === null){
+                formTour.append("department.id", Number.parseInt(tour.department.id))
+            }else{
+                formTour.append("department.id", departure);
+            }
+            if(cattour === "" || cattour === null){
+                formTour.append("cattour.id", Number.parseInt(tour.cattour.id))
+            }else{
+                formTour.append("cattour.id", cattour);
+            }
+            if(hotelTour === "" || hotelTour === null){
+                formTour.append("hotel.id", Number.parseInt(tour.hotel.id))
+            }else{
+                formTour.append("hotel.id", hotelTour);
+            }
+            if(vehicleTour === "" || vehicleTour ===null){
+                formTour.append("vehicle.id", Number.parseInt(tour.vehicle.id))
+            }else{
+                formTour.append("vehicle.id", Number.parseInt(vehicleTour));
+            }
+            if(content === "" || content ===null){
+                formTour.append("content",tour.content)
+            }else{
+                formTour.append("content", content);
+            }
+            if(note === "" || note === null){
+                formTour.append("note",tour.note)
+            }else{
+                formTour.append("note", note);
+            }
+            formTour.append("image", tour.image);
             formTour.append("file", document.getElementById("file").files[0])
             formTour.append("state", 1);
             await axios.post(`http://localhost:9090/tour/update`, formTour, {
@@ -199,6 +253,14 @@ export default function Tour1() {
                 }
             });
             selectes.map((item, index) => {
+                //delete -> insert
+                let id = Number.parseInt(tourId)
+                axios.post(`http://localhost:9090/place/tour/delete/${id}`)
+                    .then(res => {
+                        console.log(res);
+                    }).catch(err => {
+                        console.log(err);
+                    })
                 const formTourPlace = new FormData();
                 formTourPlace.append("tour.id", tour.id)
                 formTourPlace.append("place.id", item.value)
@@ -210,6 +272,7 @@ export default function Tour1() {
             })
         }
         saveTour();
+        history.push("/tours");
     }
 
 
@@ -248,37 +311,36 @@ export default function Tour1() {
                 <form className="tourForm" onSubmit={handleSaveTour}>
                     <div className="tourFormLeft">
                         <label>Tour Name</label>
-                        <input type="text" placeholder={tour.name} onChange={(e) => setName(e.target.value)} />
+                        <input type="text" id="name" placeholder={tour.name} onChange={(e) => setName(e.target.value)} />
                         <label>Price</label>
-                        <input type="number" placeholder={tour.price}
+                        <input type="number" id="price" placeholder={tour.price}
                             onChange={(e) => setPrice(e.target.value)} />
                         <label>Min amount</label>
-                        <input type="number" placeholder={tour.min_amount}
+                        <input type="number" id="min" placeholder={tour.min_amount}
                             onChange={(e) => setMin(e.target.value)} />
                         <label>Max amount</label>
-                        <input type="number" placeholder={tour.max_amount}
+                        <input type="number" id="max" placeholder={tour.max_amount}
                             onChange={(e) => setMax(e.target.value)} />
                         <label>Start day:</label>
-                        <input type="date" onChange={(e) => setStartDay(e.target.value)} />
+                        <input type="date" id="startDay" onChange={(e) => setStartDay(e.target.value)} />
                         <label>End day:</label>
-                        <input type="date" onChange={(e) => setEndDay(e.target.value)} />
+                        <input type="date" id="endDay" onChange={(e) => setEndDay(e.target.value)} />
                         <label>Departure</label>
                         <select name="departure" id="idDeparture" onChange={(e) => setDeparture(e.target.value)}>
-                            <option value={tour.department.id}>{tour.department.address}</option>
+                            
                             {
                                 department.length > 0 && department.map(item => (
-                                    item.id !== tour.department.id ?
-                                        <option value={item.id} key={item.id}>{item.address}</option> : ""
+                                        <option value={item.id} key={item.id}>{item.address}</option> 
                                 ))
                             }
                         </select>
                         <label>Cattour</label>
                         <select name="cattour" id="idCattour" onChange={(e) => setCattour(e.target.value)}>
-                            <option value={tour.cattour.id}>{tour.cattour.name}</option>
+                            
                             {
                                 cat.length > 0 && cat.map(item => (
-                                    item.id !== tour.cattour.id ?
-                                        <option value={item.id} key={item.id}>{item.name}</option> : ""
+                                    
+                                        <option value={item.id} key={item.id}>{item.name}</option> 
                                 ))
                             }
                         </select>
@@ -288,28 +350,28 @@ export default function Tour1() {
                     <div className="tourFormLeft">
                         <label>Hotel</label>
                         <select name="hotel" id="idHotel" onChange={(e) => setHotelTour(e.target.value)}>
-                            <option value={tour.hotel.id}>{tour.hotel.type}</option>
+                            
                             {
                                 hotel.length > 0 && hotel.map(item => (
-                                    item.id !== tour.hotel.id ?
-                                        <option value={item.id} key={item.id}>{item.type}</option> : ""
+                                    
+                                        <option value={item.id} key={item.id}>{item.type}</option> 
                                 ))
                             }
                         </select>
                         <label>Vehicle</label>
                         <select name="vehicle" id="idVehicle" onChange={(e) => setVehicleTour(e.target.value)}>
-                            <option value={tour.vehicle.id}>{tour.vehicle.ten}</option>
+                            
                             {
                                 vehicle.length > 0 && vehicle.map(item => (
-                                    item.id !== tour.vehicle.id ?
-                                        <option value={item.id} key={item.id}>{item.ten}</option> : ""
+                                    
+                                        <option value={item.id} key={item.id}>{item.ten}</option> 
                                 ))
                             }
                         </select>
                         <label>Content</label>
-                        <textarea rows={5} placeholder={tour.content} onChange={(e) => setContent(e.target.value)}></textarea>
+                        <textarea rows={5} id="content" placeholder={tour.content} onChange={(e) => setContent(e.target.value)}></textarea>
                         <label>Note</label>
-                        <textarea rows={5} placeholder={tour.note} onChange={(e) => setNote(e.target.value)}></textarea>
+                        <textarea rows={5} id="note" placeholder={tour.note} onChange={(e) => setNote(e.target.value)}></textarea>
                         <label>Place</label>
                         <Select
                             closeMenuOnSelect={false}
@@ -326,7 +388,7 @@ export default function Tour1() {
                             <label htmlFor="file">
                                 <Publish />
                             </label>
-                            <input type="file" id="file" onChange={(e) => setImage(e.target.value)} />
+                            <input type="file" id="file"  />
                         </div>
                         <button className="tourButton" type="submit">Update</button>
                     </div>
@@ -335,3 +397,5 @@ export default function Tour1() {
         </div>
     );
 }
+
+export default Tour1

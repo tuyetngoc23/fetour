@@ -13,6 +13,7 @@ function PayPal() {
     const tongTien = Number.parseFloat(giaNgLon+giaTreEm+giaEmBe);
     const paypal = useRef()
     const history = useHistory();
+    // const tienDoi = Number.parseFloat(tongTien/22751.5);
 
     useEffect(() => {
        window.paypal.Buttons({
